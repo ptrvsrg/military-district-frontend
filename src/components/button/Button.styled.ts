@@ -40,7 +40,7 @@ export const StyledButton = styled.button<{ config: ButtonUIConfig }>`
   width: fit-content;
   border-radius: 10px;
   border-style: solid;
-  border-width: ${(props) => (props.config.outlined ? '3px' : '0px')};
+  border-width: ${(props) => (props.config.outlined ? '2px' : '0px')};
   border-color: ${(props) => (props.config.outlined ? getButtonColorByVariant(props.config.variant) : 'none')};
   cursor: ${(props) => (props.config.disabled ? 'not-allowed' : 'pointer')};
   outline: none;
