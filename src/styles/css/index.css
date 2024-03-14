@@ -1,0 +1,14 @@
+body {
+    font-family: 'Roboto', system-ui;
+    background-color: #1E1F23;
+    margin: 0;
+    padding: 0;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+a {
+    line-height: 0;
+    text-decoration: inherit;
+}
