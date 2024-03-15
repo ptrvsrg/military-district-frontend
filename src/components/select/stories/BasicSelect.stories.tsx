@@ -2,19 +2,19 @@ import { useState } from 'react'
 import { SingleValue } from 'react-select'
 
 import { BasicSelect } from '../Select.tsx'
-import { BasicSelectConfig, OptionType } from '../Select.types.ts'
+import { BasicSelectProps, OptionType } from '../Select.types.ts'
 
 export default {
   component: BasicSelect,
   parameters: {
     layout: 'padded',
   },
-  title: 'Components/Select/BasicSelect',
+  title: 'Components/Select',
 }
 
-const Template = (config: BasicSelectConfig) => {
+const Template = (props: BasicSelectProps) => {
   const [value, setValue] = useState<SingleValue<OptionType> | null>(null)
-  config.options = [
+  props.options = [
     {
       label: 'Value 1',
       value: 'value1',
@@ -29,9 +29,9 @@ const Template = (config: BasicSelectConfig) => {
     },
   ]
 
-  if (config.onChange) {
+  if (props.onChange) {
     // @ts-ignore
-    config.onChange = (event) => setValue(event)
+    props.onChange = (event) => setValue(event)
   }
 
   return (
@@ -46,7 +46,7 @@ const Template = (config: BasicSelectConfig) => {
           width: '100%',
         }}
       >
-        <BasicSelect config={config} />
+        <BasicSelect {...props} />
         <p style={{ color: 'white' }}>
           <b>Value:</b> {value ? value.value : 'null'}
         </p>

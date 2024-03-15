@@ -5,14 +5,14 @@ export interface OptionType {
   value: string
 }
 
-export type AsyncSelectConfig = {
+export interface AsyncSelectProps {
   isDisabled: boolean
   loadOptions?: (inputValue: string) => Promise<OptionType[]>
   onChange?: (newValue: MultiValue<OptionType> | SingleValue<OptionType>, actionMeta: ActionMeta<OptionType>) => void
   size: number
 }
 
-export type BasicSelectConfig = {
+export interface BasicSelectProps {
   isDisabled: boolean
   onChange?: (newValue: MultiValue<OptionType> | SingleValue<OptionType>, actionMeta: ActionMeta<OptionType>) => void
   options: OptionType[]

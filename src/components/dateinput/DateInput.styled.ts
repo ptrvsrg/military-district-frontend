@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import calendar from '../../assets/calendar.svg'
 import { Color } from '../../styles/ts/colors.ts'
 import { Variant } from '../../styles/ts/types.ts'
-import { DateInputUIConfig } from './DateInput.type.ts'
+import { DateInputUIProps } from './DateInput.type.ts'
 
 function getColorByVariant(variant?: Variant): string {
   const defaultColor = Color.WHITE
@@ -12,7 +12,7 @@ function getColorByVariant(variant?: Variant): string {
   return variant ? colorMap.get(variant) || defaultColor : defaultColor
 }
 
-export const StyledDateInput = styled.input<{ config: DateInputUIConfig }>`
+export const StyledDateInput = styled.input<DateInputUIProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -20,14 +20,14 @@ export const StyledDateInput = styled.input<{ config: DateInputUIConfig }>`
   box-sizing: border-box;
   padding: 10px 20px;
   background-color: transparent;
-  color: ${(props) => getColorByVariant(props.config.variant)};
-  font-size: ${(props) => `${props.config.size}px`};
-  line-height: ${(props) => `${props.config.size}px`};
+  color: ${(props) => getColorByVariant(props.variant)};
+  font-size: ${(props) => `${props.size}px`};
+  line-height: ${(props) => `${props.size}px`};
   word-wrap: break-word;
   border-radius: 10px;
   border-style: solid;
   border-width: 2px;
-  border-color: ${(props) => getColorByVariant(props.config.variant)};
+  border-color: ${(props) => getColorByVariant(props.variant)};
   overflow: hidden;
 
   &:focus {
@@ -35,11 +35,11 @@ export const StyledDateInput = styled.input<{ config: DateInputUIConfig }>`
   }
 
   &::-webkit-calendar-picker-indicator {
-    color: rgba(0, 0, 0, 0);
+    color: transparent;
     opacity: 1;
     background-image: url(${calendar});
-    height: ${(props) => `${props.config.size}px`};
-    width: ${(props) => `${props.config.size}px`};
+    height: ${(props) => `${props.size}px`};
+    width: ${(props) => `${props.size}px`};
     cursor: pointer;
   }
 `

@@ -1,12 +1,12 @@
 import { Variant } from '../../../styles/ts/types.ts'
 import { PlainText as Plain } from '../Text.tsx'
-import { TextConfig } from '../Text.types.ts'
+import { TextProps } from '../Text.types.ts'
 
 export default {
   argTypes: {
     variant: {
       control: 'inline-radio',
-      options: [Variant.PRIMARY, Variant.SECONDARY],
+      options: Object.values(Variant),
     },
   },
   component: Plain,
@@ -16,7 +16,7 @@ export default {
   title: 'Components/Text',
 }
 
-const Template = (config: TextConfig) => <Plain config={config} />
+const Template = (props: TextProps) => <Plain {...props} />
 
 export const PlainText = Template.bind({})
 // @ts-ignore

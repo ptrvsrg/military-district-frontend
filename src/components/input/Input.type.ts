@@ -2,12 +2,12 @@ import React from 'react'
 
 import { Variant } from '../../styles/ts/types.ts'
 
-export type InputUIConfig = {
+export interface InputUIProps {
   size: number
   variant?: Variant
 }
 
-export type InputConfig = {
+export interface InputProps {
   name?: string
   onBlur?: (event: React.ChangeEvent<HTMLInputElement>) => void
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
@@ -17,7 +17,7 @@ export type InputConfig = {
   variant?: Variant
 }
 
-export type InputWithActionConfig = {
+export interface InputWithActionProps {
   action?: any
   image: string
   name?: string

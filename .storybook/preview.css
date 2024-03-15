@@ -11,4 +11,5 @@ body {
 a {
     line-height: 0;
     text-decoration: inherit;
+    cursor: pointer;
 }
