@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { Color } from '../../styles/ts/colors.ts'
 import { Variant } from '../../styles/ts/types.ts'
-import { ButtonTextUIConfig, ButtonUIConfig } from './Button.types.ts'
+import { ButtonTextUIProps, ButtonUIProps } from './Button.types.ts'
 
 function getButtonColorByVariant(variant?: Variant): string {
   const defaultColor = Color.WHITE
@@ -16,7 +16,7 @@ function getButtonColorByVariant(variant?: Variant): string {
 }
 
 function getButtonTextColorByVariant(outlined?: boolean, variant?: Variant): string {
-  const defaultColor = Color.BLACK
+  const defaultColor = outlined ? Color.WHITE : Color.BLACK
 
   const colorMap: Map<Variant, Color> = outlined
     ? new Map<Variant, Color>([
@@ -31,7 +31,7 @@ function getButtonTextColorByVariant(outlined?: boolean, variant?: Variant): str
   return variant && colorMap.has(variant) ? colorMap.get(variant) || defaultColor : defaultColor
 }
 
-export const StyledButton = styled.button<{ config: ButtonUIConfig }>`
+export const StyledButton = styled.button<ButtonUIProps>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,12 +40,12 @@ export const StyledButton = styled.button<{ config: ButtonUIConfig }>`
   width: fit-content;
   border-radius: 10px;
   border-style: solid;
-  border-width: ${(props) => (props.config.outlined ? '2px' : '0px')};
-  border-color: ${(props) => (props.config.outlined ? getButtonColorByVariant(props.config.variant) : 'none')};
-  cursor: ${(props) => (props.config.disabled ? 'not-allowed' : 'pointer')};
+  border-width: ${(props) => (props.outlined ? '2px' : '0px')};
+  border-color: ${(props) => (props.outlined ? getButtonColorByVariant(props.variant) : 'none')};
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   outline: none;
-  background: ${(props) => (props.config.outlined ? 'transparent' : getButtonColorByVariant(props.config.variant))};
-  color: ${(props) => getButtonTextColorByVariant(props.config.outlined, props.config.variant)};
+  background: ${(props) => (props.outlined ? 'transparent' : getButtonColorByVariant(props.variant))};
+  color: ${(props) => getButtonTextColorByVariant(props.outlined, props.variant)};
   overflow: hidden;
   box-sizing: border-box;
 
@@ -54,9 +54,9 @@ export const StyledButton = styled.button<{ config: ButtonUIConfig }>`
   }
 `
 
-export const StyledButtonText = styled.div<{ config: ButtonTextUIConfig }>`
-  color: ${(props) => getButtonTextColorByVariant(props.config.outlined, props.config.variant)};
-  font-size: ${(props) => `${props.config.size}px`};
+export const StyledButtonText = styled.div<ButtonTextUIProps>`
+  color: ${(props) => getButtonTextColorByVariant(props.outlined, props.variant)};
+  font-size: ${(props) => `${props.size}px`};
   font-weight: normal;
   word-wrap: break-word;
 `

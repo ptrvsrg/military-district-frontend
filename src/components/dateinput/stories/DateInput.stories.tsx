@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Variant } from '../../../styles/ts/types.ts'
 import { DateInput } from '../DateInput.tsx'
-import { DateInputConfig } from '../DateInput.type.ts'
+import { DateInputProps } from '../DateInput.type.ts'
 
 export default {
   argTypes: {
@@ -18,10 +18,10 @@ export default {
   title: 'Components/DateInput',
 }
 
-const Template = (config: DateInputConfig) => {
-  const [value, setValue] = useState(config.value || '')
-  if (config.onChange === undefined) {
-    config.onChange = (event) => setValue(event.target.value)
+const Template = (props: DateInputProps) => {
+  const [value, setValue] = useState(props.value || '')
+  if (props.onChange === undefined) {
+    props.onChange = (event) => setValue(event.target.value)
   }
 
   return (
@@ -36,7 +36,7 @@ const Template = (config: DateInputConfig) => {
           width: '100%',
         }}
       >
-        <DateInput config={config} />
+        <DateInput {...props} />
         <p style={{ color: 'white' }}>
           <b>Value:</b> {value}
         </p>

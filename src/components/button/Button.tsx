@@ -1,10 +1,10 @@
 import { StyledButton, StyledButtonText } from './Button.styled.ts'
-import { ButtonConfig } from './Button.types.ts'
+import { ButtonProps } from './Button.types.ts'
 
-export function Button({ config }: { config: ButtonConfig }) {
+export function Button(props: ButtonProps) {
   return (
-    <StyledButton config={config} disabled={config.disabled} onClick={config.onClick}>
-      <StyledButtonText config={config}>{config.text}</StyledButtonText>
+    <StyledButton {...props}>
+      <StyledButtonText {...props}>{props.text}</StyledButtonText>
     </StyledButton>
   )
 }

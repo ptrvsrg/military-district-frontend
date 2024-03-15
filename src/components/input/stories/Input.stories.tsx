@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Variant } from '../../../styles/ts/types.ts'
 import { Input } from '../Input.tsx'
-import { InputConfig } from '../Input.type.ts'
+import { InputProps } from '../Input.type.ts'
 
 export default {
   argTypes: {
@@ -15,13 +15,13 @@ export default {
   parameters: {
     layout: 'padded',
   },
-  title: 'Components/Input/Input',
+  title: 'Components/Input',
 }
 
-const Template = (config: InputConfig) => {
-  const [value, setValue] = useState(config.value || '')
-  if (config.onChange === undefined) {
-    config.onChange = (event) => setValue(event.target.value)
+const Template = (props: InputProps) => {
+  const [value, setValue] = useState(props.value || '')
+  if (props.onChange === undefined) {
+    props.onChange = (event) => setValue(event.target.value)
   }
 
   return (
@@ -36,7 +36,7 @@ const Template = (config: InputConfig) => {
           width: '100%',
         }}
       >
-        <Input config={config} />
+        <Input {...props} />
         <p style={{ color: 'white' }}>
           <b>Value:</b> {value}
         </p>

@@ -5,30 +5,22 @@ import { Img, ItemContainer, Row } from './Header.styled.ts'
 import { HeaderProps } from './Header.types.ts'
 
 export function Header(props: HeaderProps) {
-  const { accountUrl, homeUrl, selectedTab, tabs } = props
-
   return (
     <>
       <Row>
-        <a href={homeUrl || '#'}>
+        <a href={props.homeUrl || '#'}>
           <Img src={logo} />
         </a>
         <ItemContainer>
-          {tabs.map((tab) => {
+          {props.tabs.map((tab) => {
             return (
               <a href={tab.url || '#'}>
-                <PlainText
-                  config={{
-                    size: 18,
-                    text: tab.name,
-                    underlined: tab.name === selectedTab,
-                  }}
-                />
+                <PlainText size={18} text={tab.name} underlined={tab.name === props.selectedTab} />
               </a>
             )
           })}
         </ItemContainer>
-        <a href={accountUrl || '#'}>
+        <a href={props.accountUrl || '#'}>
           <Img src={user} />
         </a>
       </Row>

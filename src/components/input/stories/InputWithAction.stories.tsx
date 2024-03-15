@@ -3,7 +3,7 @@ import { useState } from 'react'
 import plus from '../../../assets/plus.svg'
 import { Variant } from '../../../styles/ts/types.ts'
 import { InputWithAction } from '../Input.tsx'
-import { InputWithActionConfig } from '../Input.type.ts'
+import { InputWithActionProps } from '../Input.type.ts'
 
 export default {
   argTypes: {
@@ -16,16 +16,16 @@ export default {
   parameters: {
     layout: 'padded',
   },
-  title: 'Components/Input/InputWithAction',
+  title: 'Components/Input',
 }
 
-const Template = (config: InputWithActionConfig) => {
+const Template = (props: InputWithActionProps) => {
   const [count, setCount] = useState(0)
-  config.action = () => setCount(count + 1)
+  props.action = () => setCount(count + 1)
 
-  const [value, setValue] = useState(config.value || '')
-  if (config.onChange === undefined) {
-    config.onChange = (event) => setValue(event.target.value)
+  const [value, setValue] = useState(props.value || '')
+  if (props.onChange === undefined) {
+    props.onChange = (event) => setValue(event.target.value)
   }
 
   return (
@@ -40,7 +40,7 @@ const Template = (config: InputWithActionConfig) => {
           width: '100%',
         }}
       >
-        <InputWithAction config={config} />
+        <InputWithAction {...props} />
         <p style={{ color: 'white' }}>
           <b>Value:</b> {value}
         </p>
@@ -52,9 +52,9 @@ const Template = (config: InputWithActionConfig) => {
   )
 }
 
-export const Default = Template.bind({})
+export const WithAction = Template.bind({})
 // @ts-ignore
-Default.args = {
+WithAction.args = {
   action: undefined,
   image: plus,
   name: 'InputWithAction',

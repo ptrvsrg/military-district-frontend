@@ -1,18 +1,18 @@
 import { Variant } from '../../styles/ts/types.ts'
 
-export type ButtonUIConfig = {
+export interface ButtonUIProps {
   disabled?: boolean
   outlined?: boolean
   variant?: Variant
 }
 
-export type ButtonTextUIConfig = {
+export interface ButtonTextUIProps {
   outlined?: boolean
   size: number
   variant?: Variant
 }
 
-export type ButtonConfig = {
+export interface ButtonProps {
   disabled?: boolean
   onClick?: any
   outlined?: boolean

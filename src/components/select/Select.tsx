@@ -2,7 +2,7 @@ import Select, { StylesConfig } from 'react-select'
 import Async from 'react-select/async'
 
 import { Color } from '../../styles/ts/colors.ts'
-import { AsyncSelectConfig, BasicSelectConfig, OptionType } from './Select.types.ts'
+import { AsyncSelectProps, BasicSelectProps, OptionType } from './Select.types.ts'
 
 function getStyles(size: number): StylesConfig<OptionType> {
   return {
@@ -70,18 +70,10 @@ function getStyles(size: number): StylesConfig<OptionType> {
   }
 }
 
-export function AsyncSelect({ config }: { config: AsyncSelectConfig }) {
-  return (
-    <Async
-      defaultOptions
-      isDisabled={config.isDisabled}
-      loadOptions={config.loadOptions}
-      onChange={config.onChange}
-      styles={getStyles(config.size)}
-    ></Async>
-  )
+export function AsyncSelect(props: AsyncSelectProps) {
+  return <Async defaultOptions {...props} styles={getStyles(props.size)}></Async>
 }
 
-export function BasicSelect({ config }: { config: BasicSelectConfig }) {
-  return <Select isDisabled={config.isDisabled} onChange={config.onChange} options={config.options} styles={getStyles(config.size)}></Select>
+export function BasicSelect(props: BasicSelectProps) {
+  return <Select {...props} styles={getStyles(props.size)}></Select>
 }

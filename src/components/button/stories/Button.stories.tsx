@@ -2,13 +2,13 @@ import { useState } from 'react'
 
 import { Variant } from '../../../styles/ts/types.ts'
 import { Button } from '../Button.tsx'
-import { ButtonConfig } from '../Button.types.ts'
+import { ButtonProps } from '../Button.types.ts'
 
 export default {
   argTypes: {
     variant: {
       control: 'inline-radio',
-      options: [Variant.PRIMARY, Variant.SECONDARY],
+      options: Object.values(Variant),
     },
   },
   component: Button,
@@ -18,9 +18,9 @@ export default {
   title: 'Components/Button',
 }
 
-const Template = (config: ButtonConfig) => {
+const Template = (props: ButtonProps) => {
   const [count, setCount] = useState(0)
-  config.onClick = () => setCount(count + 1)
+  props.onClick = () => setCount(count + 1)
 
   return (
     <>
@@ -34,7 +34,7 @@ const Template = (config: ButtonConfig) => {
           width: '100%',
         }}
       >
-        <Button config={config} />
+        <Button {...props} />
         <p style={{ color: 'white' }}>
           <b>Count:</b> {count}
         </p>

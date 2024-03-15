@@ -1,12 +1,12 @@
 import { Variant } from '../../../styles/ts/types.ts'
 import { HeaderText as Header } from '../Text.tsx'
-import { TextConfig } from '../Text.types.ts'
+import { TextProps } from '../Text.types.ts'
 
 export default {
   argTypes: {
     variant: {
       control: 'inline-radio',
-      options: [Variant.PRIMARY, Variant.SECONDARY],
+      options: Object.values(Variant),
     },
   },
   component: Header,
@@ -16,7 +16,7 @@ export default {
   title: 'Components/Text',
 }
 
-const Template = (config: TextConfig) => <Header config={config} />
+const Template = (props: TextProps) => <Header {...props} />
 
 export const HeaderText = Template.bind({})
 // @ts-ignore

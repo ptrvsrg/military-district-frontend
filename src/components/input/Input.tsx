@@ -1,33 +1,21 @@
-import { Img, InputContainer, StyledInput } from './Input.styled.ts'
-import { InputConfig, InputWithActionConfig } from './Input.type.ts'
+import { Img, InputWrapper, StyledInput } from './Input.styled.ts'
+import { InputProps, InputWithActionProps } from './Input.type.ts'
 
-export function Input({ config }: { config: InputConfig }) {
+export function Input(props: InputProps) {
   return (
-    <InputContainer config={config}>
-      <StyledInput
-        config={config}
-        onBlur={config.onBlur}
-        onChange={config.onChange}
-        onFocus={config.onFocus}
-        type={'text'}
-        value={config.value}
-      ></StyledInput>
-    </InputContainer>
+    <InputWrapper variant={props.variant}>
+      <StyledInput {...props} type={'text'}></StyledInput>
+    </InputWrapper>
   )
 }
 
-export function InputWithAction({ config }: { config: InputWithActionConfig }) {
+export function InputWithAction(props: InputWithActionProps) {
   return (
-    <InputContainer config={config}>
-      <StyledInput
-        config={config}
-        onBlur={config.onBlur}
-        onChange={config.onChange}
-        onFocus={config.onFocus}
-        type={'text'}
-        value={config.value}
-      ></StyledInput>
-      <Img onClick={config.action} src={config.image} />
-    </InputContainer>
+    <InputWrapper variant={props.variant}>
+      <StyledInput {...props} type={'text'}></StyledInput>
+      <a onClick={props.action}>
+        <Img src={props.image} />
+      </a>
+    </InputWrapper>
   )
 }

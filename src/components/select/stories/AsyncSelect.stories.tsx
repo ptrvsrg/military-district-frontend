@@ -2,17 +2,17 @@ import { useState } from 'react'
 import { SingleValue } from 'react-select'
 
 import { AsyncSelect } from '../Select.tsx'
-import { AsyncSelectConfig, OptionType } from '../Select.types.ts'
+import { AsyncSelectProps, OptionType } from '../Select.types.ts'
 
 export default {
   component: AsyncSelect,
   parameters: {
     layout: 'padded',
   },
-  title: 'Components/Select/AsyncSelect',
+  title: 'Components/Select',
 }
 
-const Template = (config: AsyncSelectConfig) => {
+const Template = (props: AsyncSelectProps) => {
   const [value, setValue] = useState<SingleValue<OptionType> | null>(null)
   const options: OptionType[] = [
     {
@@ -29,12 +29,12 @@ const Template = (config: AsyncSelectConfig) => {
     },
   ]
 
-  if (config.onChange) {
+  if (props.onChange) {
     // @ts-ignore
-    config.onChange = (event) => setValue(event)
+    props.onChange = (event) => setValue(event)
   }
-  if (config.loadOptions) {
-    config.loadOptions = (inputValue) => {
+  if (props.loadOptions) {
+    props.loadOptions = (inputValue) => {
       console.log(inputValue)
       return new Promise<OptionType[]>((resolve) => {
         setTimeout(() => {
@@ -56,7 +56,7 @@ const Template = (config: AsyncSelectConfig) => {
           width: '100%',
         }}
       >
-        <AsyncSelect config={config} />
+        <AsyncSelect {...props} />
         <p style={{ color: 'white' }}>
           <b>Value:</b> {value ? value.value : 'null'}
         </p>
@@ -65,9 +65,9 @@ const Template = (config: AsyncSelectConfig) => {
   )
 }
 
-export const Default = Template.bind({})
+export const Async = Template.bind({})
 // @ts-ignore
-Default.args = {
+Async.args = {
   isDisabled: false,
   loadOptions: () => {},
   onChange: () => {},
