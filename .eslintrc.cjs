@@ -1,6 +1,6 @@
 module.exports = {
     root: true,
-    env: { browser: true, es2021: true },
+    env: {browser: true, es2021: true},
     extends: [
         "airbnb-base",
         "airbnb-typescript/base",
@@ -27,7 +27,7 @@ module.exports = {
         },
     },
     rules: {
-        "prettier/prettier": ["warn", { endOfLine: "auto" }],
+        "prettier/prettier": ["warn", {endOfLine: "auto"}],
 
         "no-console": "off",
         "no-debugger": "warn",
@@ -92,7 +92,8 @@ module.exports = {
         "getter-return": ["warn", {allowImplicit: true}],
         "class-methods-use-this": "off",
         "max-lines": ["warn", 300],
-        "no-restricted-exports": ["error", {restrictDefaultExports: {defaultFrom: false}}],
+        "no-restricted-exports": ["error",
+            {restrictDefaultExports: {defaultFrom: false}}],
         "max-len": ["error", {code: 150}],
         "object-curly-newline": "off",
         "arrow-body-style": "off",
