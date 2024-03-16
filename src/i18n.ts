@@ -14,5 +14,4 @@ i18n.use(initReactI18next).init({
   resources,
 })
 
-// @ts-ignore
-export default 'i18next'
+export { default } from 'i18next'

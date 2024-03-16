@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { Color } from '../../styles/ts/colors.ts'
 import { Variant } from '../../styles/ts/types.ts'
-import { TextUIProps } from './Text.types.ts'
+import { TextAlign, TextUIProps } from './Text.types.ts'
 
 function getHeaderTextColorByVariant(variant?: Variant): string {
   const defaultColor = Color.WHITE
@@ -37,6 +37,7 @@ export const StyledText = styled.span<TextUIProps>`
   text-decoration-thickness: ${(props) => (props.bold ? (props.size > 20 ? '4px' : '2px') : props.size > 20 ? '2px' : '1px')};
   word-wrap: break-word;
   overflow-wrap: break-word;
+  text-align: ${(props) => props.align || TextAlign.LEFT};
 `
 
 export const StyledHeaderText = styled(StyledText)`
