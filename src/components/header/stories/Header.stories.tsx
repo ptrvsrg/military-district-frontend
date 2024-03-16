@@ -1,8 +1,21 @@
+import { ReactKeycloakProvider } from '@react-keycloak/web'
+import Keycloak from 'keycloak-js'
+import { BrowserRouter } from 'react-router-dom'
+
 import { Header } from '../Header.tsx'
 import { HeaderProps } from '../Header.types.ts'
 
 export default {
   component: Header,
+  decorators: [
+    (Story) => (
+      <ReactKeycloakProvider authClient={new Keycloak()}>
+        <BrowserRouter>
+          <Story />
+        </BrowserRouter>
+      </ReactKeycloakProvider>
+    ),
+  ],
   parameters: {
     layout: 'padded',
   },
@@ -20,24 +33,5 @@ const Template = (props: HeaderProps) => {
 export const Default = Template.bind({})
 // @ts-ignore
 Default.args = {
-  accountUrl: undefined,
-  homeUrl: undefined,
-  selectedTab: 'Item 1',
-  tabs: [
-    {
-      name: 'Item 1',
-    },
-    {
-      name: 'Item 2',
-    },
-    {
-      name: 'Item 3',
-    },
-    {
-      name: 'Item 4',
-    },
-    {
-      name: 'Item 5',
-    },
-  ],
+  selectedTab: undefined,
 }

@@ -14,7 +14,7 @@ export interface ButtonTextUIProps {
 
 export interface ButtonProps {
   disabled?: boolean
-  onClick?: any
+  onClick?: () => void
   outlined?: boolean
   size: number
   text: string
