@@ -27,4 +27,5 @@ export const ItemContainer = styled.div`
 
 export const Img = styled.img`
   height: 22px;
+  cursor: pointer;
 `
