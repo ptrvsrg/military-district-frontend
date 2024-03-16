@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import calendar from '../../assets/calendar.svg'
 import { Color } from '../../styles/ts/colors.ts'
 import { Variant } from '../../styles/ts/types.ts'
-import { DateInputUIProps } from './DateInput.type.ts'
+import { DateInputUIProps } from './DateInput.types.ts'
 
 function getColorByVariant(variant?: Variant): string {
   const defaultColor = Color.WHITE

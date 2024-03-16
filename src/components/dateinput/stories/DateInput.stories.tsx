@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Variant } from '../../../styles/ts/types.ts'
 import { DateInput } from '../DateInput.tsx'
-import { DateInputProps } from '../DateInput.type.ts'
+import { DateInputProps } from '../DateInput.types.ts'
 
 export default {
   argTypes: {
