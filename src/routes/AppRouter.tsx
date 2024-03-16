@@ -1,6 +1,7 @@
 import { useKeycloak } from '@react-keycloak/web'
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom'
 
+import Error404Page from '../pages/Error404Page.tsx'
 import LoaderPage from '../pages/LoaderPage.tsx'
 import LoginPage from '../pages/LoginPage.tsx'
 import MainPage from '../pages/MainPage.tsx'
@@ -19,7 +20,7 @@ interface PrivateRouteProps {
 export function PrivateRoute(props: PrivateRouteProps) {
   const { keycloak } = useKeycloak()
   if (!keycloak?.authenticated) return <Navigate replace to={'/login'} />
-  if (!arrayContains(getPrivileges(), props.privileges)) return <Outlet />
+  if (!arrayContains(getPrivileges(), props.privileges)) return <Navigate to={'/not-found'} />
   return <Outlet />
 }
 
@@ -41,6 +42,7 @@ export const AppRouter = () => {
         <Route element={<PrivateRoute privileges={[]} />}>
           <Route element={<MainPage />} path={'/'} />
         </Route>
+        <Route element={<Error404Page />} path={'*'} />
       </Routes>
     </BrowserRouter>
   )
