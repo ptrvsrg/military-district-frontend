@@ -1,7 +1,8 @@
 import { useKeycloak } from '@react-keycloak/web'
-import { BrowserRouter, Navigate, Outlet, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom'
 
 import LoaderPage from '../pages/LoaderPage.tsx'
+import LoginPage from '../pages/LoginPage.tsx'
 import { getPrivileges } from '../stores/AuthStore.ts'
 
 function arrayContains(array, subArray) {
@@ -33,9 +34,9 @@ export const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route element={<UnauthenticatedRoute />}> */}
-        {/*  <Route element={<LoginPage />} path={'/login'} /> */}
-        {/* </Route> */}
+        <Route element={<UnauthenticatedRoute />}>
+          <Route element={<LoginPage />} path={'/login'} />
+        </Route>
         {/* <Route element={<PrivateRoute privileges={[]} />}> */}
         {/*  <Route element={<MainPage />} path={'/'} /> */}
         {/* </Route> */}

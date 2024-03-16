@@ -2,10 +2,9 @@ body {
     font-family: 'Roboto', system-ui;
     background-color: #1E1F23;
     margin: 0;
-    padding: 50px;
     place-items: center;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     box-sizing: border-box;
 }
 
