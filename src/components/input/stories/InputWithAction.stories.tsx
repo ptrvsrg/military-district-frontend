@@ -21,7 +21,7 @@ export default {
 
 const Template = (props: InputWithActionProps) => {
   const [count, setCount] = useState(0)
-  props.action = () => setCount(count + 1)
+  props.onClick = () => setCount(count + 1)
 
   const [value, setValue] = useState(props.value || '')
   if (props.onChange === undefined) {
@@ -60,6 +60,10 @@ WithAction.args = {
   name: 'InputWithAction',
   onChange: undefined,
   size: 18,
+  styles: {
+    input: { backgroundColor: 'transparent' },
+    wrapper: { backgroundColor: 'transparent' },
+  },
   value: undefined,
   variant: Variant.PRIMARY,
 }
