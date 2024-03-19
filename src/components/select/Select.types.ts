@@ -5,16 +5,11 @@ export interface OptionType {
   value: string
 }
 
-export interface AsyncSelectProps {
+export interface SelectProps {
   isDisabled: boolean
   loadOptions?: (inputValue: string) => Promise<OptionType[]>
   onChange?: (newValue: MultiValue<OptionType> | SingleValue<OptionType>, actionMeta: ActionMeta<OptionType>) => void
-  size: number
-}
-
-export interface BasicSelectProps {
-  isDisabled: boolean
-  onChange?: (newValue: MultiValue<OptionType> | SingleValue<OptionType>, actionMeta: ActionMeta<OptionType>) => void
-  options: OptionType[]
+  outlined?: boolean
+  placeholder?: string
   size: number
 }

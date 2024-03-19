@@ -1,36 +1,43 @@
-import Select, { StylesConfig } from 'react-select'
+import { StylesConfig } from 'react-select'
 import Async from 'react-select/async'
 
 import { Color } from '../../styles/ts/colors.ts'
-import { AsyncSelectProps, BasicSelectProps, OptionType } from './Select.types.ts'
+import { OptionType, SelectProps } from './Select.types.ts'
 
-function getStyles(size: number): StylesConfig<OptionType> {
+function getStyles(size: number, outlined?: boolean): StylesConfig<OptionType> {
   return {
-    control: (baseStyles, state) => ({
-      ...baseStyles,
+    control: (state) => ({
       '&:hover': {
         boxShadow: 'none',
       },
+      alignItems: 'center',
       backgroundColor: state.isDisabled ? Color.DARK_GRAY : 'transparent',
-      borderColor: Color.WHITE,
+      border: outlined === undefined || outlined ? `2px solid ${Color.WHITE}` : 'none',
       borderRadius: '10px',
-      borderStyle: 'solid',
-      borderWidth: '2px',
       boxShadow: 'none',
-      padding: '5px 10px',
+      display: 'flex',
+      flexDirection: 'row',
+      gap: '20px',
+      justifyContent: 'center',
+      padding: '10px 20px',
     }),
-    dropdownIndicator: (baseStyles) => ({
-      ...baseStyles,
+    dropdownIndicator: () => ({
       '&:hover': {
         color: Color.WHITE,
       },
+      alignItems: 'center',
       color: Color.WHITE,
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      margin: 0,
     }),
     indicatorSeparator: () => ({}),
     input: (baseStyles) => ({
       ...baseStyles,
       color: Color.WHITE,
       fontSize: size,
+      margin: 0,
       padding: 0,
     }),
     loadingIndicator: (baseStyles) => ({
@@ -44,10 +51,11 @@ function getStyles(size: number): StylesConfig<OptionType> {
     }),
     menu: (baseStyles) => ({
       ...baseStyles,
+      backgroundColor: Color.WHITE,
       borderRadius: '10px',
     }),
-    option: (baseStyles, state) => ({
-      ...baseStyles,
+    option: (base, state) => ({
+      ...base,
       '&:hover': {
         backgroundColor: state.isFocused ? Color.LIGHT_GRAY : Color.WHITE,
       },
@@ -55,25 +63,30 @@ function getStyles(size: number): StylesConfig<OptionType> {
       borderRadius: '10px',
       color: Color.BLACK,
       fontSize: size,
-      padding: '5px 10px',
+      padding: '10px 20px',
     }),
-    placeholder: (baseStyles) => ({
-      ...baseStyles,
+    placeholder: () => ({
       color: Color.LIGHT_GRAY,
       fontSize: size,
     }),
-    singleValue: (baseStyles) => ({
-      ...baseStyles,
+    singleValue: () => ({
       color: Color.WHITE,
       fontSize: size,
+      maxWidth: '100%',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+    }),
+    valueContainer: () => ({
+      alignItems: 'center',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      padding: 0,
     }),
   }
 }
 
-export function AsyncSelect(props: AsyncSelectProps) {
-  return <Async defaultOptions {...props} styles={getStyles(props.size)}></Async>
-}
-
-export function BasicSelect(props: BasicSelectProps) {
-  return <Select {...props} styles={getStyles(props.size)}></Select>
+export function Select(props: SelectProps) {
+  return <Async defaultOptions {...props} styles={getStyles(props.size, props.outlined)}></Async>
 }
