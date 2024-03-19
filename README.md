@@ -11,6 +11,7 @@ Military District - информационная система военного
 - TypeScript
 - Vite
 - Styled Components
+- Apollo Client
 - i18n
 - ESLint
 - Storybook
