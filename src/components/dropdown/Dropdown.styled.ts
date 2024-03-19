@@ -34,7 +34,6 @@ export const StyledDropdown = styled.div`
   width: fit-content;
 `
 
-export const Img = styled.img<{ height: number }>`
-  height: ${(props) => props.height};
+export const Img = styled.img`
   cursor: pointer;
 `

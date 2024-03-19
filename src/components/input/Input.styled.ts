@@ -40,18 +40,8 @@ export const InputWrapper = styled.div<{ variant?: Variant }>`
   overflow-wrap: break-word;
   background-color: transparent;
   border-radius: 10px;
-  border-style: solid;
-  border-width: 2px;
-  border-color: ${(props) => getColorByVariant(props.variant)};
+  border: ${(props) => getColorByVariant(props.variant)} solid 2px;
   gap: 20px;
   padding: 0 20px;
   box-sizing: border-box;
-
-  &:focus {
-    outline: none;
-  }
-`
-
-export const Img = styled.img`
-  height: 60%;
 `

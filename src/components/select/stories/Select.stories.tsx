@@ -1,20 +1,20 @@
 import { useState } from 'react'
 import { SingleValue } from 'react-select'
 
-import { BasicSelect } from '../Select.tsx'
-import { BasicSelectProps, OptionType } from '../Select.types.ts'
+import { Select } from '../Select.tsx'
+import { OptionType, SelectProps } from '../Select.types.ts'
 
 export default {
-  component: BasicSelect,
+  component: Select,
   parameters: {
     layout: 'padded',
   },
   title: 'Components/Select',
 }
 
-const Template = (props: BasicSelectProps) => {
+const Template = (props: SelectProps) => {
   const [value, setValue] = useState<SingleValue<OptionType> | null>(null)
-  props.options = [
+  const options: OptionType[] = [
     {
       label: 'Value 1',
       value: 'value1',
@@ -33,6 +33,16 @@ const Template = (props: BasicSelectProps) => {
     // @ts-ignore
     props.onChange = (event) => setValue(event)
   }
+  if (props.loadOptions) {
+    props.loadOptions = (inputValue) => {
+      console.log(inputValue)
+      return new Promise<OptionType[]>((resolve) => {
+        setTimeout(() => {
+          resolve(options)
+        }, 1000)
+      })
+    }
+  }
 
   return (
     <>
@@ -46,7 +56,7 @@ const Template = (props: BasicSelectProps) => {
           width: '100%',
         }}
       >
-        <BasicSelect {...props} />
+        <Select {...props} />
         <p style={{ color: 'white' }}>
           <b>Value:</b> {value ? value.value : 'null'}
         </p>
@@ -59,6 +69,9 @@ export const Default = Template.bind({})
 // @ts-ignore
 Default.args = {
   isDisabled: false,
+  loadOptions: () => {},
   onChange: () => {},
-  size: 24,
+  outlined: true,
+  placeholder: 'Select...',
+  size: 18,
 }

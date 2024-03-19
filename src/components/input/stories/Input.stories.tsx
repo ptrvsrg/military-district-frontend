@@ -51,6 +51,10 @@ Default.args = {
   name: 'input',
   onChange: undefined,
   size: 18,
+  styles: {
+    input: { backgroundColor: 'transparent' },
+    wrapper: { backgroundColor: 'transparent' },
+  },
   value: undefined,
   variant: Variant.PRIMARY,
 }
