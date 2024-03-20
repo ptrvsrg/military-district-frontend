@@ -25,3 +25,19 @@ export const ButtonWrapper = styled.div`
   gap: 10px;
   width: fit-content;
 `
+
+export const Input = styled.input<{ fontSize: number }>`
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  color: ${Color.WHITE};
+  font-size: ${(props) => `${props.fontSize}px`};
+  line-height: ${(props) => `${props.fontSize}px`};
+  overflow: hidden;
+  border: none;
+  text-align: center;
+
+  &:focus {
+    outline: none;
+  }
+`
