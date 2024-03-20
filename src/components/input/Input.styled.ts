@@ -16,12 +16,12 @@ export const StyledInput = styled.input<InputUIProps>`
   justify-content: center;
   display: inline-flex;
   box-sizing: border-box;
-  width: 100%;
+  width: fit-content;
   padding: 10px 0;
   background-color: transparent;
   color: ${(props) => getColorByVariant(props.variant)};
-  font-size: ${(props) => `${props.size}px`};
-  line-height: ${(props) => `${props.size}px`};
+  font-size: ${(props) => `${props.fontSize}px`};
+  line-height: ${(props) => `${props.fontSize}px`};
   font-weight: normal;
   word-wrap: break-word;
   overflow: hidden;
@@ -30,13 +30,17 @@ export const StyledInput = styled.input<InputUIProps>`
   &:focus {
     outline: none;
   }
+
+  &::placeholder {
+    color: ${Color.DARK_GRAY};
+  }
 `
 
 export const InputWrapper = styled.div<{ variant?: Variant }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: fit-content;
   overflow-wrap: break-word;
   background-color: transparent;
   border-radius: 10px;
