@@ -1,7 +1,7 @@
-export interface PageNumberProps {
-  decrement: () => void
-  increment: () => void
+export interface PaginationProps {
   page: number
-  setPage: (newValue: number) => void
+  pageCount: number
+  setPage: (value: number) => void
+  setPageCount: (value: number) => void
   size: number
 }
