@@ -6,7 +6,8 @@ import { OptionType, SelectProps } from './Select.types.ts'
 
 function getStyles(size: number, outlined?: boolean): StylesConfig<OptionType> {
   return {
-    control: (state) => ({
+    control: (baseStyles, state) => ({
+      ...baseStyles,
       '&:hover': {
         boxShadow: 'none',
       },
@@ -19,6 +20,7 @@ function getStyles(size: number, outlined?: boolean): StylesConfig<OptionType> {
       flexDirection: 'row',
       gap: '20px',
       justifyContent: 'center',
+      minWidth: '200px',
       padding: '10px 20px',
     }),
     dropdownIndicator: () => ({
@@ -53,9 +55,10 @@ function getStyles(size: number, outlined?: boolean): StylesConfig<OptionType> {
       ...baseStyles,
       backgroundColor: Color.WHITE,
       borderRadius: '10px',
+      maxWidth: '100%',
+      minWidth: 'fit-content',
     }),
-    option: (base, state) => ({
-      ...base,
+    option: (state) => ({
       '&:hover': {
         backgroundColor: state.isFocused ? Color.LIGHT_GRAY : Color.WHITE,
       },
@@ -63,13 +66,18 @@ function getStyles(size: number, outlined?: boolean): StylesConfig<OptionType> {
       borderRadius: '10px',
       color: Color.BLACK,
       fontSize: size,
+      minWidth: 'fit-content',
       padding: '10px 20px',
+      whiteSpace: 'nowrap',
     }),
-    placeholder: () => ({
-      color: Color.LIGHT_GRAY,
+    placeholder: (baseStyles, state) => ({
+      ...baseStyles,
+      color: Color.DARK_GRAY,
+      display: state.isFocused ? 'none' : 'block',
       fontSize: size,
     }),
-    singleValue: () => ({
+    singleValue: (baseStyles) => ({
+      ...baseStyles,
       color: Color.WHITE,
       fontSize: size,
       maxWidth: '100%',
@@ -77,7 +85,8 @@ function getStyles(size: number, outlined?: boolean): StylesConfig<OptionType> {
       textOverflow: 'ellipsis',
       whiteSpace: 'nowrap',
     }),
-    valueContainer: () => ({
+    valueContainer: (baseStyles) => ({
+      ...baseStyles,
       alignItems: 'center',
       display: 'flex',
       flexDirection: 'row',
@@ -88,5 +97,5 @@ function getStyles(size: number, outlined?: boolean): StylesConfig<OptionType> {
 }
 
 export function Select(props: SelectProps) {
-  return <Async defaultOptions {...props} styles={getStyles(props.size, props.outlined)}></Async>
+  return <Async defaultOptions {...props} styles={getStyles(props.size, props.outlined)} />
 }
