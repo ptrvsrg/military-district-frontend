@@ -1,28 +1,26 @@
 import { useState } from 'react'
 
+import { Button } from '../../../components/button/Button.tsx'
+import { ButtonProps } from '../../../components/button/Button.types.ts'
 import { Variant } from '../../../styles/ts/types.ts'
-import { Input } from '../Input.tsx'
-import { InputProps } from '../Input.type.ts'
 
 export default {
   argTypes: {
     variant: {
       control: 'inline-radio',
-      options: [Variant.PRIMARY],
+      options: Object.values(Variant),
     },
   },
-  component: Input,
+  component: Button,
   parameters: {
     layout: 'padded',
   },
-  title: 'Components/Input',
+  title: 'Components/Button',
 }
 
-const Template = (props: InputProps) => {
-  const [value, setValue] = useState(props.value || '')
-  if (props.onChange === undefined) {
-    props.onChange = (event) => setValue(event.target.value)
-  }
+const Template = (props: ButtonProps) => {
+  const [count, setCount] = useState(0)
+  props.onClick = () => setCount(count + 1)
 
   return (
     <>
@@ -36,9 +34,9 @@ const Template = (props: InputProps) => {
           width: '100%',
         }}
       >
-        <Input {...props} />
+        <Button {...props} />
         <p style={{ color: 'white' }}>
-          <b>Value:</b> {value}
+          <b>Count:</b> {count}
         </p>
       </div>
     </>
@@ -48,13 +46,9 @@ const Template = (props: InputProps) => {
 export const Default = Template.bind({})
 // @ts-ignore
 Default.args = {
-  name: 'input',
-  onChange: undefined,
-  size: 18,
-  styles: {
-    input: { backgroundColor: 'transparent' },
-    wrapper: { backgroundColor: 'transparent' },
-  },
-  value: undefined,
+  disabled: false,
+  outlined: false,
+  size: 40,
+  text: 'Button',
   variant: Variant.PRIMARY,
 }

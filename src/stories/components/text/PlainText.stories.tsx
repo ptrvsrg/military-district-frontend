@@ -1,6 +1,6 @@
+import { PlainText as Plain } from '../../../components/text/Text.tsx'
+import { TextProps } from '../../../components/text/Text.types.ts'
 import { Variant } from '../../../styles/ts/types.ts'
-import { PlainText as Plain } from '../Text.tsx'
-import { TextProps } from '../Text.types.ts'
 
 export default {
   argTypes: {

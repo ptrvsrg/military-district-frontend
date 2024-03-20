@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { SingleValue } from 'react-select'
 
-import { Select } from '../Select.tsx'
-import { OptionType, SelectProps } from '../Select.types.ts'
+import { Select } from '../../../components/select/Select.tsx'
+import { AsyncSelectProps, OptionType } from '../../../components/select/Select.types.ts'
 
 export default {
   component: Select,
@@ -12,7 +12,7 @@ export default {
   title: 'Components/Select',
 }
 
-const Template = (props: SelectProps) => {
+const Template = (props: AsyncSelectProps) => {
   const [value, setValue] = useState<SingleValue<OptionType> | null>(null)
   const options: OptionType[] = [
     {

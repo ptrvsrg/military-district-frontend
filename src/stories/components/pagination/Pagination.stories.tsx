@@ -1,23 +1,23 @@
 import { useState } from 'react'
 
-import { PageNumber as PageNumberComponent } from '../Pagination.tsx'
-import { PageNumberProps } from '../Pagination.types.ts'
+import { Pagination } from '../../../components/pagination/Pagination.tsx'
+import { PaginationProps } from '../../../components/pagination/Pagination.types.ts'
 
 export default {
-  component: PageNumberComponent,
+  component: Pagination,
   parameters: {
     layout: 'padded',
   },
   title: 'Components/Pagination',
 }
 
-const Template = (props: PageNumberProps) => {
-  const [page, setPage] = useState(0)
+const Template = (props: PaginationProps) => {
+  const [page, setPage] = useState(1)
+  const [pageCount, setPageCount] = useState(10)
   props.page = page
-  props.increment = () => setPage(page + 1)
-  props.decrement = () => {
-    if (page > 0) setPage(page - 1)
-  }
+  props.setPage = setPage
+  props.pageCount = pageCount
+  props.setPageCount = setPageCount
 
   return (
     <>
@@ -31,7 +31,7 @@ const Template = (props: PageNumberProps) => {
           width: '100%',
         }}
       >
-        <PageNumberComponent {...props} />
+        <Pagination {...props} />
         <p style={{ color: 'white' }}>
           <b>Page:</b> {page}
         </p>
@@ -40,8 +40,8 @@ const Template = (props: PageNumberProps) => {
   )
 }
 
-export const PageNumber = Template.bind({})
+export const Default = Template.bind({})
 // @ts-ignore
-PageNumber.args = {
+Default.args = {
   size: 18,
 }

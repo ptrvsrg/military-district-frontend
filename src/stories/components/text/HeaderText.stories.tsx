@@ -1,6 +1,6 @@
+import { HeaderText as Header } from '../../../components/text/Text.tsx'
+import { TextProps } from '../../../components/text/Text.types.ts'
 import { Variant } from '../../../styles/ts/types.ts'
-import { HeaderText as Header } from '../Text.tsx'
-import { TextProps } from '../Text.types.ts'
 
 export default {
   argTypes: {

@@ -1,6 +1,6 @@
 import logo from '../../../assets/logo.svg'
-import { Dropdown, MenuItem } from '../Dropdown.tsx'
-import { DropdownProps } from '../Dropdown.types.ts'
+import { Dropdown, MenuItem } from '../../../components/dropdown/Dropdown.tsx'
+import { DropdownProps } from '../../../components/dropdown/Dropdown.types.ts'
 
 export default {
   component: Dropdown,

@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
 import plus from '../../../assets/plus.svg'
+import { InputWithAction } from '../../../components/input/Input.tsx'
+import { InputWithActionProps } from '../../../components/input/Input.type.ts'
 import { Variant } from '../../../styles/ts/types.ts'
-import { InputWithAction } from '../Input.tsx'
-import { InputWithActionProps } from '../Input.type.ts'
 
 export default {
   argTypes: {
@@ -59,6 +59,7 @@ WithAction.args = {
   image: plus,
   name: 'InputWithAction',
   onChange: undefined,
+  placeholder: 'Enter...',
   size: 18,
   styles: {
     input: { backgroundColor: 'transparent' },

@@ -1,26 +1,28 @@
 import { useState } from 'react'
 
+import { DateInput } from '../../../components/dateinput/DateInput.tsx'
+import { DateInputProps } from '../../../components/dateinput/DateInput.types.ts'
 import { Variant } from '../../../styles/ts/types.ts'
-import { Button } from '../Button.tsx'
-import { ButtonProps } from '../Button.types.ts'
 
 export default {
   argTypes: {
     variant: {
       control: 'inline-radio',
-      options: Object.values(Variant),
+      options: [Variant.PRIMARY],
     },
   },
-  component: Button,
+  component: DateInput,
   parameters: {
     layout: 'padded',
   },
-  title: 'Components/Button',
+  title: 'Components/DateInput',
 }
 
-const Template = (props: ButtonProps) => {
-  const [count, setCount] = useState(0)
-  props.onClick = () => setCount(count + 1)
+const Template = (props: DateInputProps) => {
+  const [value, setValue] = useState(props.value || '')
+  if (props.onChange === undefined) {
+    props.onChange = (event) => setValue(event.target.value)
+  }
 
   return (
     <>
@@ -34,9 +36,9 @@ const Template = (props: ButtonProps) => {
           width: '100%',
         }}
       >
-        <Button {...props} />
+        <DateInput {...props} />
         <p style={{ color: 'white' }}>
-          <b>Count:</b> {count}
+          <b>Value:</b> {value}
         </p>
       </div>
     </>
@@ -46,9 +48,9 @@ const Template = (props: ButtonProps) => {
 export const Default = Template.bind({})
 // @ts-ignore
 Default.args = {
-  disabled: false,
-  outlined: false,
-  size: 40,
-  text: 'Button',
+  name: 'DateInput',
+  onChange: undefined,
+  size: 18,
+  value: undefined,
   variant: Variant.PRIMARY,
 }
