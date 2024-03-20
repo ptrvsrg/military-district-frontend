@@ -6,14 +6,14 @@ import styled from 'styled-components'
 import { Header } from '../components/header/Header.tsx'
 import { HeaderText, PlainText } from '../components/text/Text.tsx'
 import { TextAlign } from '../components/text/Text.types.ts'
-import { Map } from '../modules/map/Map.tsx'
+import { Map } from '../modules/worldMap/Map.tsx'
 import { Color } from '../styles/ts/colors.ts'
 
 const Container = styled.div`
   display: block;
   width: 100%;
-  height: calc(100vh - 40px);
-  padding: 20px;
+  height: calc(100vh - 50px);
+  padding: 0 20px 20px 20px;
   box-sizing: border-box;
 `
 
