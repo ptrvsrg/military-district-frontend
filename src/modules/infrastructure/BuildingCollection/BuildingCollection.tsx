@@ -60,9 +60,9 @@ export const BuildingCollection = observer((props: BuildingCollectionProps) => {
         ].reduce((item1, item2) => (item1 ? `${item1}, ${item2}` : item2)) || '—'}
       </p>,
       <p>{building?.coordinate ? `${building?.coordinate?.lat}, ${building?.coordinate?.lng}` : '—'}</p>,
-      formationNamesToCell(building?.companies.map((company) => company.name) ?? [], '/formation/companies/update'),
-      formationNamesToCell(building?.platoons.map((platoon) => platoon.name) ?? [], '/formation/platoons/update'),
-      formationNamesToCell(building?.squads.map((squad) => squad.name) ?? [], '/formation/squads/update'),
+      formationNamesToCell(building?.companies.map((company) => company.name) ?? [], '/formations/companies/update'),
+      formationNamesToCell(building?.platoons.map((platoon) => platoon.name) ?? [], '/formations/platoons/update'),
+      formationNamesToCell(building?.squads.map((squad) => squad.name) ?? [], '/formations/squads/update'),
     ]
   })
 

@@ -40,7 +40,7 @@ export const SquadCollection = observer((props: SquadCollectionProps) => {
     return [
       <Link href={`/formations/squads/update?name=${squad?.name || ''}`}>{squad?.name || '—'}</Link>,
       <Link href={`/militaries/update?mbn=${squad?.commander?.mbn || ''}`}>{squad?.commander?.mbn || '—'}</Link>,
-      formationNamesToCell((squad?.platoon ? [squad?.platoon] : []).map((company) => company.name) ?? [], '/formation/platoons/update'),
+      formationNamesToCell((squad?.platoon ? [squad?.platoon] : []).map((company) => company.name) ?? [], '/formations/platoons/update'),
     ]
   })
 

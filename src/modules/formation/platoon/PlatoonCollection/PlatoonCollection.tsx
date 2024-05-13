@@ -41,8 +41,8 @@ export const PlatoonCollection = observer((props: PlatoonCollectionProps) => {
     return [
       <Link href={`/formations/platoons/update?name=${platoon?.name || ''}`}>{platoon?.name || '—'}</Link>,
       <Link href={`/militaries/update?mbn=${platoon?.commander?.mbn || ''}`}>{platoon?.commander?.mbn || '—'}</Link>,
-      formationNamesToCell((platoon?.company ? [platoon?.company] : []).map((company) => company.name) ?? [], '/formation/companies/update'),
-      formationNamesToCell(platoon?.squads.map((squad) => squad.name) ?? [], '/formation/squads/update'),
+      formationNamesToCell((platoon?.company ? [platoon?.company] : []).map((company) => company.name) ?? [], '/formations/companies/update'),
+      formationNamesToCell(platoon?.squads.map((squad) => squad.name) ?? [], '/formations/squads/update'),
     ]
   })
 

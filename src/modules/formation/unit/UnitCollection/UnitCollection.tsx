@@ -56,10 +56,10 @@ export const UnitCollection = observer((props: UnitCollectionProps) => {
       </p>,
       <p>{unit?.coordinate ? `${unit?.coordinate?.lat}, ${unit?.coordinate?.lng}` : '—'}</p>,
       <Link href={`/militaries/update?mbn=${unit?.commander?.mbn || ''}`}>{unit?.commander?.mbn || '—'}</Link>,
-      formationNamesToCell(unit?.companies.map((company) => company.name) ?? [], '/formation/companies/update'),
-      formationNamesToCell(unit?.brigades.map((brigade) => brigade.name) ?? [], '/formation/brigades/update'),
-      formationNamesToCell(unit?.corps.map((corps) => corps.name) ?? [], '/formation/corps/update'),
-      formationNamesToCell(unit?.divisions.map((division) => division.name) ?? [], '/formation/divisions/update'),
+      formationNamesToCell(unit?.companies.map((company) => company.name) ?? [], '/formations/companies/update'),
+      formationNamesToCell(unit?.brigades.map((brigade) => brigade.name) ?? [], '/formations/brigades/update'),
+      formationNamesToCell(unit?.corps.map((corps) => corps.name) ?? [], '/formations/corps/update'),
+      formationNamesToCell(unit?.divisions.map((division) => division.name) ?? [], '/formations/divisions/update'),
     ]
   })
 

@@ -42,9 +42,9 @@ export const ArmyCollection = observer((props: ArmyCollectionProps) => {
     return [
       <Link href={`/formations/armies/update?name=${army?.name || ''}`}>{army?.name || '—'}</Link>,
       <Link href={`/militaries/update?mbn=${army?.commander?.mbn || ''}`}>{army?.commander?.mbn || '—'}</Link>,
-      formationNamesToCell(army?.brigades.map((brigade) => brigade.name) ?? [], '/formation/brigades/update'),
-      formationNamesToCell(army?.corps.map((corps) => corps.name) ?? [], '/formation/corps/update'),
-      formationNamesToCell(army?.divisions.map((division) => division.name) ?? [], '/formation/divisions/update'),
+      formationNamesToCell(army?.brigades.map((brigade) => brigade.name) ?? [], '/formations/brigades/update'),
+      formationNamesToCell(army?.corps.map((corps) => corps.name) ?? [], '/formations/corps/update'),
+      formationNamesToCell(army?.divisions.map((division) => division.name) ?? [], '/formations/divisions/update'),
     ]
   })
 
