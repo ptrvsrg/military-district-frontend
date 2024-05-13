@@ -7,10 +7,10 @@ import { SnackbarProvider } from 'notistack'
 import ReactDOM from 'react-dom/client'
 import { I18nextProvider } from 'react-i18next'
 
-import i18n from './i18n.ts'
 import { AppRouter } from './routes/AppRouter.tsx'
 import keycloak from './stores/AuthStore.ts'
 import apolloClient from './stores/GraphQlStore.ts'
+import i18n from './stores/LocaleStore.ts'
 import './styles/css/index.css'
 import { theme } from './styles/ts/colors.ts'
 
