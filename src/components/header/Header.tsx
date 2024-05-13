@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 import logo from '../../assets/icons/logo.svg'
-import { getLanguage, setLanguage } from '../../i18n.ts'
+import { getLanguage, setLanguage } from '../../stores/LocaleStore.ts'
 
 export function Header() {
   const ref = useRef<HTMLDivElement>(null)
