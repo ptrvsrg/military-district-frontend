@@ -2,13 +2,30 @@ body {
     font-family: 'Roboto', system-ui;
     background-color: #1E1F23;
     margin: 0;
-    padding: 0;
     place-items: center;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    box-sizing: border-box;
 }
 
 a {
     line-height: 0;
     text-decoration: inherit;
+    cursor: pointer;
+}
+
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: white;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    border-left: 7px solid transparent;
+    background-clip: content-box;
 }
