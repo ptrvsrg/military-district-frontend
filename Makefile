@@ -1,7 +1,7 @@
 HOME_DIR = $(shell pwd)
 SAMPLE_ENV_FILE = $(HOME_DIR)/sample.env
 ENV_FILE = $(HOME_DIR)/.env
-BUILD_DIR = ./build ./dist
+BUILD_DIR = $(HOME_DIR)/build $(HOME_DIR)/dist
 
 NPM = npm
 DOCKER = docker
@@ -26,7 +26,7 @@ dev:
 build-image:
 	$(DOCKER) build \
 	-t $(IMAGE_NAME):latest \
-	-t $(IMAGE_NAME):$(shell node -p -e "require('./package.json').version") .
+	-t $(IMAGE_NAME):$(shell node -p -e "require('./package.json').version") $(HOME_DIR)
 
 .PHONY: build
 build:
