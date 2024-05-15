@@ -1,11 +1,15 @@
-export type ReportData = {
-  columns: string[]
+export type ReportBuildOutput = {
   data: Record<string, string>[]
 }
 
-export type ReportInfo = {
+export type ReportInfoOutput = {
+  description?: string
   name: string
   parameters: string[]
+}
+
+export type ReportBuildInput = {
+  parameters: Record<string, null | string>
 }
 
 export type GetReportsParameters = {
@@ -14,15 +18,11 @@ export type GetReportsParameters = {
 }
 
 export type GetReportParameters = {
-  reportName: string
+  name: string
 }
 
-export type ParameterInput = {
+export type BuildReportParameters = {
   name: string
-  value: null | string
 }
 
-export type ReportBuildInput = {
-  name: string
-  parameters: ParameterInput[]
-}
+export type ExportReportParameters = BuildReportParameters
