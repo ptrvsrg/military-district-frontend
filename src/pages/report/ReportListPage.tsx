@@ -6,8 +6,9 @@ import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { Spinner } from '../../components/spinner/Spinner.tsx'
-import { ReportInfo } from '../../models/report/report.types.ts'
+import { ReportInfoOutput } from '../../models/report/report.types.ts'
 import { useServices } from '../../services/useServices.ts'
+import loadingStore from '../../stores/LoadingStore.ts'
 import { ColumnContent, SpinnerWrapper } from '../../styles/ts/containers.ts'
 import { Layout } from '../Layout.tsx'
 
@@ -24,25 +25,21 @@ export function ReportListPage() {
   const navigate = useNavigate()
 
   // State
-  const [reports, setReports] = useState<ReportInfo[]>([])
-  const [loading, setLoading] = useState(true)
+  const [reports, setReports] = useState<ReportInfoOutput[]>([])
 
   // Fetch data
   const { reportService } = useServices()
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true)
-
-      const reportsData = await reportService.get({})
+      const reportsData = await reportService.getAll({})
       setReports(reportsData)
-
-      setLoading(false)
     }
 
-    fetchData()
+    loadingStore.setLoading(true)
+    fetchData().finally(() => loadingStore.setLoading(false))
   }, [])
 
-  if (loading) {
+  if (loadingStore.getLoading()) {
     return (
       <Layout>
         <SpinnerWrapper style={{ height: 'calc(100vh - 110px)' }}>
@@ -62,7 +59,7 @@ export function ReportListPage() {
           <List sx={{ width: '100%' }}>
             {reports.map((report) => (
               <ListItem disablePadding>
-                <ListItemButton onClick={() => navigate(`/reports/build?reportName=${report.name}`)}>
+                <ListItemButton onClick={() => navigate(`/reports/build?name=${report.name}`)}>
                   <ListItemIcon>
                     <ArticleOutlined />
                   </ListItemIcon>{' '}
