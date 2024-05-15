@@ -1,3 +1,13 @@
+# Ignore file
+.gitignore
+
+# Github files
+README.md
+LICENSE
+
+# Sample env file
+sample.env
+
 # Logs
 logs
 *.log
