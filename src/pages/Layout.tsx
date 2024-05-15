@@ -20,6 +20,7 @@ const Content = styled.div`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  margin-top: 20px;
 `
 
 type LayoutProps = {
