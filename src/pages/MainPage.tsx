@@ -25,6 +25,7 @@ const Content = styled.div`
   @media (max-width: 1200px) {
     flex-direction: column;
     height: max-content;
+    gap: 0;
   }
 `
 
@@ -41,7 +42,7 @@ const InfoWrapper = styled.div`
 
   @media (max-width: 1200px) {
     width: 100%;
-    padding-top: 20px;
+    padding: 0 20px 20px 20px;
   }
 `
 
