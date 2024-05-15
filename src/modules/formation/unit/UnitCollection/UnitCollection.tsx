@@ -63,7 +63,7 @@ export const UnitCollection = observer((props: UnitCollectionProps) => {
     ]
   })
 
-  if (props.loadingStore.loading) {
+  if (props.loadingStore.getLoading()) {
     return (
       <SpinnerWrapper style={{ height: 400 }}>
         <Spinner />

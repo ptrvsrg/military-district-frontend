@@ -36,7 +36,7 @@ export const WeaponCollection = observer((props: WeaponCollectionProps) => {
     ]
   })
 
-  if (props.loadingStore.loading) {
+  if (props.loadingStore.getLoading()) {
     return (
       <SpinnerWrapper style={{ height: 400 }}>
         <Spinner />

@@ -24,7 +24,7 @@ export const CombatEquipmentTypeCollection = observer((props: CombatEquipmentTyp
     return [<Link href={equipmentTypeUpdateLink}>{combatEquipmentType.name}</Link>, <p>{combatEquipmentType.category.name}</p>]
   })
 
-  if (props.loadingStore.loading) {
+  if (props.loadingStore.getLoading()) {
     return (
       <SpinnerWrapper style={{ height: 400 }}>
         <Spinner />

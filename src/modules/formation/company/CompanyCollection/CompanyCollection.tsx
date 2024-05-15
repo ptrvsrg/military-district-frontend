@@ -46,7 +46,7 @@ export const CompanyCollection = observer((props: CompanyCollectionProps) => {
     ]
   })
 
-  if (props.loadingStore.loading) {
+  if (props.loadingStore.getLoading()) {
     return (
       <SpinnerWrapper style={{ height: 400 }}>
         <Spinner />

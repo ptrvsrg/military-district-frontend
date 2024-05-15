@@ -36,7 +36,7 @@ export const CombatEquipmentCollection = observer((props: CombatEquipmentCollect
     ]
   })
 
-  if (props.loadingStore.loading) {
+  if (props.loadingStore.getLoading()) {
     return (
       <SpinnerWrapper style={{ height: 400 }}>
         <Spinner />
