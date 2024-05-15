@@ -27,7 +27,7 @@ export const FormationsForm = observer((props: FormationProps) => {
   return (
     <>
       <Typography align={'center'} color={'white'} sx={{ textDecoration: 'underline' }} variant={'h5'}>
-        {t('formation')}
+        {t('formations')}
       </Typography>
       <Autocomplete
         getOptionLabel={getOptionLabelForFormation}
