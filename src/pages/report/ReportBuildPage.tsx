@@ -1,97 +1,42 @@
 import { Typography } from '@mui/material'
-import { ReactNode, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Spinner } from '../../components/spinner/Spinner.tsx'
-import { Column, Table } from '../../components/table/Table.tsx'
-import { ParameterInput, ReportData, ReportInfo } from '../../models/report/report.types.ts'
-import { ReportParametersPanel } from '../../modules/report/ReportParametersPanel.tsx'
+import { ReportInfoOutput } from '../../models/report/report.types.ts'
+import reportDataStore from '../../modules/report/ReportData/ReportData.store.ts'
+import { ReportData } from '../../modules/report/ReportData/ReportData.tsx'
+import { ReportParameters } from '../../modules/report/ReportParams/ReportParameters.tsx'
+import reportParametersStore from '../../modules/report/ReportParams/ReportParametersStore.ts'
 import { useServices } from '../../services/useServices.ts'
-import { ColumnContent, RowWrapper, SpinnerWrapper } from '../../styles/ts/containers.ts'
+import loadingStore from '../../stores/LoadingStore.ts'
+import { ColumnContent, SpinnerWrapper } from '../../styles/ts/containers.ts'
 import { Error404Page } from '../Error404Page.tsx'
 import { Layout } from '../Layout.tsx'
 
 export function ReportBuildPage() {
   // Query parameter
   const [searchParameters] = useSearchParams()
-  const reportName = searchParameters.get('reportName')
-  if (reportName === null) {
+  const name = searchParameters.get('name')
+  if (name === null) {
     return <Error404Page />
   }
 
   // Fetch report
-  const [report, setReport] = useState<ReportInfo | null | undefined>()
-  const [loading, setLoading] = useState(true)
+  const [report, setReport] = useState<ReportInfoOutput | undefined>()
   const { reportService } = useServices()
-
   useEffect(() => {
     const fetchData = async () => {
-      const reportData = await reportService.getByName({ reportName })
+      const reportData = await reportService.getByName({ name })
       setReport(reportData)
     }
 
-    setLoading(true)
-    fetchData().finally(() => setLoading(false))
-  }, [])
-
-  // Fetch report data
-  const [reportData, setReportData] = useState<ReportData | null | undefined>()
-  const [loadingData, setLoadingData] = useState(false)
-  const handleCreateClick = (parameters: Map<string, string>) => {
-    const parameterInputs =
-      report?.parameters.map((parameter) => {
-        return {
-          name: parameter,
-          value: parameters.get(parameter) ?? null,
-        } as ParameterInput
-      }) ?? []
-
-    const fetchData = async () => {
-      const reportDataData = await reportService.build({
-        name: report?.name ?? '',
-        parameters: parameterInputs.filter((parameterInput) => parameterInput.value !== null && parameterInput.value !== ''),
-      })
-      setReportData(reportDataData)
-    }
-
-    setLoadingData(true)
-    fetchData().finally(() => setLoadingData(false))
-  }
-
-  // Export report
-  const handleExportClick = (parameters: Map<string, string>) => {
-    const parameterInputs =
-      report?.parameters.map((parameter) => {
-        return {
-          name: parameter,
-          value: parameters.get(parameter) ?? null,
-        } as ParameterInput
-      }) ?? []
-
-    const fetchData = async () => {
-      await reportService.export({
-        name: report?.name ?? '',
-        parameters: parameterInputs.filter((parameterInput) => parameterInput.value !== null && parameterInput.value !== ''),
-      })
-    }
-
-    fetchData()
-  }
-
-  // Table
-  const tableColumns: Column[] =
-    reportData?.columns.map((column) => {
-      return {
-        label: <b>{column.toUpperCase().replaceAll('_', ' ')}</b>,
-      }
-    }) ?? []
-  const tableData: ReactNode[][] =
-    reportData?.data.map((record) => {
-      return reportData?.columns.map((column) => <p>{record[column]}</p>) ?? []
-    }) ?? []
+    loadingStore.setLoading(true)
+    fetchData().finally(() => loadingStore.setLoading(false))
+  }, [name])
 
   // Render
-  if (loading) {
+  if (loadingStore.getLoading()) {
     return (
       <Layout>
         <SpinnerWrapper style={{ height: 'calc(100vh - 110px)' }}>
@@ -101,7 +46,7 @@ export function ReportBuildPage() {
     )
   }
 
-  if (!loading && (report === null || report === undefined)) {
+  if (!loadingStore.getLoading() && (report === null || report === undefined)) {
     return <Error404Page />
   }
 
@@ -109,18 +54,18 @@ export function ReportBuildPage() {
     <Layout>
       <ColumnContent>
         <Typography align={'center'} color={'white'} variant={'h5'}>
-          {report?.name.toUpperCase().replaceAll('_', ' ') ?? ''}
+          {report?.name ?? ''}
         </Typography>
-        <ReportParametersPanel onCreateClick={handleCreateClick} onExportClick={handleExportClick} parameters={report?.parameters ?? []} />
-        {loadingData ? (
-          <SpinnerWrapper style={{ height: 400 }}>
-            <Spinner />
-          </SpinnerWrapper>
-        ) : (
-          <RowWrapper>
-            <Table columns={tableColumns} data={tableData} />
-          </RowWrapper>
-        )}
+        <Typography align={'center'} color={'#999'} variant={'subtitle1'}>
+          {report?.description ?? ''}
+        </Typography>
+        <ReportParameters
+          loadingStore={loadingStore}
+          report={report}
+          reportDataStore={reportDataStore}
+          reportParametersStore={reportParametersStore}
+        />
+        <ReportData loadingStore={loadingStore} reportDataStore={reportDataStore} />
       </ColumnContent>
     </Layout>
   )
