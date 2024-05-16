@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Spinner } from '../../../components/spinner/Spinner.tsx'
@@ -21,29 +21,29 @@ export function WeaponUpdatePage() {
 
   // Fetch data
   const [weapon, setWeapon] = useState<Weapon | null | undefined>()
+  const [loading, setLoading] = useState(false)
   const { weaponService } = useServices()
 
+  const fetchWeapon = useCallback(async () => {
+    const weaponData = await weaponService.getWeapon({ serialNumber })
+    setWeapon(weaponData)
+  }, [serialNumber])
   useEffect(() => {
-    const fetchData = async () => {
-      loadingStore.setLoading(true)
-      const weaponData = await weaponService.getWeapon({ serialNumber })
-      setWeapon(weaponData)
-      loadingStore.setLoading(false)
-    }
+    setLoading(true)
+    fetchWeapon().finally(() => setLoading(false))
+  }, [fetchWeapon])
 
-    fetchData()
-  }, [])
-
-  if (!loadingStore.getLoading() && (weapon === null || weapon === undefined)) {
-    return <Error404Page />
-  }
-
-  if (loadingStore.getLoading()) {
+  // Render
+  if (loading) {
     return (
       <SpinnerWrapper>
         <Spinner />
       </SpinnerWrapper>
     )
+  }
+
+  if (weapon === null || weapon === undefined) {
+    return <Error404Page />
   }
 
   const weaponFormStore = new WeaponFormStore(weapon ?? undefined)

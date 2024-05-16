@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Spinner } from '../../../components/spinner/Spinner.tsx'
@@ -21,29 +21,29 @@ export function SquadUpdatePage() {
 
   // Fetch data
   const [squad, setSquad] = useState<Squad | null | undefined>()
+  const [loading, setLoading] = useState(false)
   const { squadService } = useServices()
 
+  const fetchSquad = useCallback(async () => {
+    const squadData = await squadService.getSquad({ name })
+    setSquad(squadData)
+  }, [name])
   useEffect(() => {
-    const fetchData = async () => {
-      loadingStore.setLoading(true)
-      const squadData = await squadService.getSquad({ name })
-      setSquad(squadData)
-      loadingStore.setLoading(false)
-    }
+    setLoading(true)
+    fetchSquad().finally(() => setLoading(false))
+  }, [fetchSquad])
 
-    fetchData()
-  }, [])
-
-  if (!loadingStore.getLoading() && (squad === null || squad === undefined)) {
-    return <Error404Page />
-  }
-
-  if (loadingStore.getLoading()) {
+  // Render
+  if (loading) {
     return (
       <SpinnerWrapper>
         <Spinner />
       </SpinnerWrapper>
     )
+  }
+
+  if (squad === null || squad === undefined) {
+    return <Error404Page />
   }
 
   const squadFormStore = new SquadFormStore(squad ?? undefined)

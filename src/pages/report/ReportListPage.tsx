@@ -1,6 +1,6 @@
 import { ArticleOutlined } from '@mui/icons-material'
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
@@ -8,7 +8,6 @@ import styled from 'styled-components'
 import { Spinner } from '../../components/spinner/Spinner.tsx'
 import { ReportInfoOutput } from '../../models/report/report.types.ts'
 import { useServices } from '../../services/useServices.ts'
-import loadingStore from '../../stores/LoadingStore.ts'
 import { ColumnContent, SpinnerWrapper } from '../../styles/ts/containers.ts'
 import { Layout } from '../Layout.tsx'
 
@@ -24,22 +23,22 @@ export function ReportListPage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
-  // State
-  const [reports, setReports] = useState<ReportInfoOutput[]>([])
-
   // Fetch data
+  const [reports, setReports] = useState<ReportInfoOutput[]>([])
+  const [loading, setLoading] = useState<boolean>(false)
   const { reportService } = useServices()
-  useEffect(() => {
-    const fetchData = async () => {
-      const reportsData = await reportService.getAll({})
-      setReports(reportsData)
-    }
 
-    loadingStore.setLoading(true)
-    fetchData().finally(() => loadingStore.setLoading(false))
+  const fetchReports = useCallback(async () => {
+    const reportsData = await reportService.getAll({})
+    setReports(reportsData)
   }, [])
+  useEffect(() => {
+    setLoading(true)
+    fetchReports().finally(() => setLoading(false))
+  }, [fetchReports])
 
-  if (loadingStore.getLoading()) {
+  // Render
+  if (loading) {
     return (
       <Layout>
         <SpinnerWrapper style={{ height: 'calc(100vh - 110px)' }}>

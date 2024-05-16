@@ -1,15 +1,16 @@
 import { Link, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import { LatLng } from 'leaflet'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 
+import { Spinner } from '../components/spinner/Spinner.tsx'
 import { UnitPlacement } from '../models/graphql/fragments.ts'
 import { Map, Marker } from '../modules/map/Map.tsx'
 import { useServices } from '../services/useServices.ts'
-import loadingStore from '../stores/LoadingStore.ts'
 import { projectConfig } from '../stores/ProjectStore.ts'
+import { SpinnerWrapper } from '../styles/ts/containers.ts'
 import { Layout } from './Layout.tsx'
 
 const Content = styled.div`
@@ -18,7 +19,7 @@ const Content = styled.div`
   justify-content: center;
   flex-direction: row;
   width: 100%;
-  height: calc(100vh - 90px);
+  height: calc(100vh - 110px);
   box-sizing: border-box;
   gap: 30px;
 
@@ -42,7 +43,7 @@ const InfoWrapper = styled.div`
 
   @media (max-width: 1200px) {
     width: 100%;
-    padding: 0 20px 20px 20px;
+    padding: 20px;
   }
 `
 
@@ -63,20 +64,19 @@ const MapWrapper = styled.div`
 `
 
 export function MainPage() {
-  // State
-  const [unitPlacements, setUnitPlacements] = useState<UnitPlacement[]>([])
-
   // Fetch data
+  const [unitPlacements, setUnitPlacements] = useState<UnitPlacement[]>([])
+  const [loading, setLoading] = useState(false)
   const { unitService } = useServices()
-  useEffect(() => {
-    const fetchData = async () => {
-      const unitPlacementsData = await unitService.getUnitPlacements()
-      setUnitPlacements(unitPlacementsData)
-    }
 
-    loadingStore.setLoading(true)
-    fetchData().finally(() => loadingStore.setLoading(false))
+  const fetchUnitPlacements = useCallback(async () => {
+    const unitPlacementsData = await unitService.getUnitPlacements()
+    setUnitPlacements(unitPlacementsData)
   }, [])
+  useEffect(() => {
+    setLoading(true)
+    fetchUnitPlacements().finally(() => setLoading(false))
+  }, [fetchUnitPlacements])
 
   // eslint-disable-next-line unicorn/consistent-function-scoping
   const mapUnitPlacementsToMarkers = (unitPlacements1: UnitPlacement[]) => {
@@ -123,7 +123,13 @@ export function MainPage() {
             </Box>
           </InfoWrapper>
           <MapWrapper>
-            <Map markers={mapUnitPlacementsToMarkers(unitPlacements)} />
+            {loading ? (
+              <SpinnerWrapper>
+                <Spinner />
+              </SpinnerWrapper>
+            ) : (
+              <Map markers={mapUnitPlacementsToMarkers(unitPlacements)} />
+            )}
           </MapWrapper>
         </Content>
       </Layout>

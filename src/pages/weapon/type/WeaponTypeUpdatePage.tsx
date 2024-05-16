@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Spinner } from '../../../components/spinner/Spinner.tsx'
@@ -22,29 +22,29 @@ export function WeaponTypeUpdatePage() {
 
   // Fetch data
   const [weaponType, setWeaponType] = useState<WeaponType | null | undefined>()
+  const [loading, setLoading] = useState(false)
   const { weaponTypeService } = useServices()
 
+  const fetchWeaponType = useCallback(async () => {
+    const weaponTypeData = await weaponTypeService.getWeaponType({ category, name })
+    setWeaponType(weaponTypeData)
+  }, [category, name])
   useEffect(() => {
-    const fetchData = async () => {
-      loadingStore.setLoading(true)
-      const weaponTypeData = await weaponTypeService.getWeaponType({ category, name })
-      setWeaponType(weaponTypeData)
-      loadingStore.setLoading(false)
-    }
+    setLoading(true)
+    fetchWeaponType().finally(() => setLoading(false))
+  }, [fetchWeaponType])
 
-    fetchData()
-  }, [])
-
-  if (!loadingStore.getLoading() && (weaponType === null || weaponType === undefined)) {
-    return <Error404Page />
-  }
-
-  if (loadingStore.getLoading()) {
+  // Render
+  if (loading) {
     return (
       <SpinnerWrapper>
         <Spinner />
       </SpinnerWrapper>
     )
+  }
+
+  if (weaponType === null || weaponType === undefined) {
+    return <Error404Page />
   }
 
   const weaponTypeFormStore = new WeaponTypeFormStore(weaponType ?? undefined)

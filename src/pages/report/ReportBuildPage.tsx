@@ -1,13 +1,13 @@
 import { Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Spinner } from '../../components/spinner/Spinner.tsx'
 import { ReportInfoOutput } from '../../models/report/report.types.ts'
-import reportDataStore from '../../modules/report/ReportData/ReportData.store.ts'
+import { ReportDataStore } from '../../modules/report/ReportData/ReportData.store.ts'
 import { ReportData } from '../../modules/report/ReportData/ReportData.tsx'
 import { ReportParameters } from '../../modules/report/ReportParams/ReportParameters.tsx'
-import reportParametersStore from '../../modules/report/ReportParams/ReportParametersStore.ts'
+import { ReportParametersStore } from '../../modules/report/ReportParams/ReportParameters.store.ts'
 import { useServices } from '../../services/useServices.ts'
 import loadingStore from '../../stores/LoadingStore.ts'
 import { ColumnContent, SpinnerWrapper } from '../../styles/ts/containers.ts'
@@ -23,20 +23,21 @@ export function ReportBuildPage() {
   }
 
   // Fetch report
-  const [report, setReport] = useState<ReportInfoOutput | undefined>()
+  const [report, setReport] = useState<ReportInfoOutput | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
   const { reportService } = useServices()
-  useEffect(() => {
-    const fetchData = async () => {
-      const reportData = await reportService.getByName({ name })
-      setReport(reportData)
-    }
 
-    loadingStore.setLoading(true)
-    fetchData().finally(() => loadingStore.setLoading(false))
+  const fetchReport = useCallback(async () => {
+    const reportData = await reportService.getByName({ name })
+    setReport(reportData)
   }, [name])
+  useEffect(() => {
+    setLoading(true)
+    fetchReport().finally(() => setLoading(false))
+  }, [fetchReport])
 
   // Render
-  if (loadingStore.getLoading()) {
+  if (loading) {
     return (
       <Layout>
         <SpinnerWrapper style={{ height: 'calc(100vh - 110px)' }}>
@@ -46,18 +47,20 @@ export function ReportBuildPage() {
     )
   }
 
-  if (!loadingStore.getLoading() && (report === null || report === undefined)) {
+  if (report === null) {
     return <Error404Page />
   }
 
+  const reportParametersStore = new ReportParametersStore()
+  const reportDataStore = new ReportDataStore()
   return (
     <Layout>
       <ColumnContent>
         <Typography align={'center'} color={'white'} variant={'h5'}>
-          {report?.name ?? ''}
+          {report.name ?? ''}
         </Typography>
         <Typography align={'center'} color={'#999'} variant={'subtitle1'}>
-          {report?.description ?? ''}
+          {report.description ?? ''}
         </Typography>
         <ReportParameters
           loadingStore={loadingStore}

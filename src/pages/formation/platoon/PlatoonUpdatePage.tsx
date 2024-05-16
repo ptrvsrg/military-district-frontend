@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Spinner } from '../../../components/spinner/Spinner.tsx'
@@ -21,29 +21,29 @@ export function PlatoonUpdatePage() {
 
   // Fetch data
   const [platoon, setPlatoon] = useState<Platoon | null | undefined>()
+  const [loading, setLoading] = useState(false)
   const { platoonService } = useServices()
 
+  const fetchPlatoon = useCallback(async () => {
+    const platoonData = await platoonService.getPlatoon({ name })
+    setPlatoon(platoonData)
+  }, [name])
   useEffect(() => {
-    const fetchData = async () => {
-      loadingStore.setLoading(true)
-      const platoonData = await platoonService.getPlatoon({ name })
-      setPlatoon(platoonData)
-      loadingStore.setLoading(false)
-    }
+    setLoading(true)
+    fetchPlatoon().finally(() => setLoading(false))
+  }, [fetchPlatoon])
 
-    fetchData()
-  }, [])
-
-  if (!loadingStore.getLoading() && (platoon === null || platoon === undefined)) {
-    return <Error404Page />
-  }
-
-  if (loadingStore.getLoading()) {
+  // Render
+  if (loading) {
     return (
       <SpinnerWrapper>
         <Spinner />
       </SpinnerWrapper>
     )
+  }
+
+  if (platoon === null || platoon === undefined) {
+    return <Error404Page />
   }
 
   const platoonFormStore = new PlatoonFormStore(platoon ?? undefined)

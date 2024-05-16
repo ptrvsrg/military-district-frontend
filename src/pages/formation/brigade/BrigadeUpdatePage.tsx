@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Spinner } from '../../../components/spinner/Spinner.tsx'
@@ -21,29 +21,29 @@ export function BrigadeUpdatePage() {
 
   // Fetch data
   const [brigade, setBrigade] = useState<Brigade | null | undefined>()
+  const [loading, setLoading] = useState(false)
   const { brigadeService } = useServices()
 
+  const fetchBrigade = useCallback(async () => {
+    const brigadeData = await brigadeService.getBrigade({ name })
+    setBrigade(brigadeData)
+  }, [name])
   useEffect(() => {
-    const fetchData = async () => {
-      loadingStore.setLoading(true)
-      const brigadeData = await brigadeService.getBrigade({ name })
-      setBrigade(brigadeData)
-      loadingStore.setLoading(false)
-    }
+    setLoading(true)
+    fetchBrigade().finally(() => setLoading(false))
+  }, [fetchBrigade])
 
-    fetchData()
-  }, [])
-
-  if (!loadingStore.getLoading() && (brigade === null || brigade === undefined)) {
-    return <Error404Page />
-  }
-
-  if (loadingStore.getLoading()) {
+  // Render
+  if (loading) {
     return (
       <SpinnerWrapper>
         <Spinner />
       </SpinnerWrapper>
     )
+  }
+
+  if (brigade === null || brigade === undefined) {
+    return <Error404Page />
   }
 
   const brigadeFormStore = new BrigadeFormStore(brigade ?? undefined)

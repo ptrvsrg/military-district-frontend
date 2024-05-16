@@ -1,3 +1,5 @@
+import { AxiosError } from 'axios'
+
 import { HttpClient } from '../../common/clients/HttpClient.ts'
 import {
   BuildReportParameters,
@@ -30,9 +32,18 @@ export class ReportService {
     return result.data.count as number
   }
 
-  public async getByName(parameters: GetReportParameters): Promise<ReportInfoOutput> {
-    const result = await this.httpClient.get<ReportInfoOutput>(`${this.baseUrl}/one`, true, parameters)
-    return result.data as ReportInfoOutput
+  public async getByName(parameters: GetReportParameters): Promise<ReportInfoOutput | null> {
+    try {
+      const result = await this.httpClient.get<ReportInfoOutput>(`${this.baseUrl}/one`, true, parameters)
+      return result.data as ReportInfoOutput
+    } catch (error) {
+      console.log(error)
+      if (error instanceof AxiosError && error.response?.status === 404) {
+        console.log('OK')
+        return null
+      }
+      throw error
+    }
   }
 
   public async build(data: ReportBuildInput, parameters: BuildReportParameters): Promise<ReportBuildOutput> {

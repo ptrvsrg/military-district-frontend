@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Spinner } from '../../../components/spinner/Spinner.tsx'
@@ -21,29 +21,29 @@ export function ArmyUpdatePage() {
 
   // Fetch data
   const [army, setArmy] = useState<Army | null | undefined>()
+  const [loading, setLoading] = useState(false)
   const { armyService } = useServices()
 
+  const fetchArmy = useCallback(async () => {
+    const armyData = await armyService.getArmy({ name })
+    setArmy(armyData)
+  }, [name])
   useEffect(() => {
-    const fetchData = async () => {
-      loadingStore.setLoading(true)
-      const armyData = await armyService.getArmy({ name })
-      setArmy(armyData)
-      loadingStore.setLoading(false)
-    }
+    setLoading(true)
+    fetchArmy().finally(() => setLoading(false))
+  }, [fetchArmy])
 
-    fetchData()
-  }, [])
-
-  if (!loadingStore.getLoading() && (army === null || army === undefined)) {
-    return <Error404Page />
-  }
-
-  if (loadingStore.getLoading()) {
+  // Render
+  if (loading) {
     return (
       <SpinnerWrapper>
         <Spinner />
       </SpinnerWrapper>
     )
+  }
+
+  if (army === null || army === undefined) {
+    return <Error404Page />
   }
 
   const armyFormStore = new ArmyFormStore(army ?? undefined)

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Spinner } from '../../../components/spinner/Spinner.tsx'
@@ -21,29 +21,31 @@ export function CorpsUpdatePage() {
 
   // Fetch data
   const [corps, setCorps] = useState<Corps | null | undefined>()
+  const [loading, setLoading] = useState(false)
   const { corpsService } = useServices()
 
+  const fetchCorps = useCallback(async () => {
+    setLoading(true)
+    const corpsData = await corpsService.getOneCorps({ name })
+    setCorps(corpsData)
+    setLoading(false)
+  }, [name])
   useEffect(() => {
-    const fetchData = async () => {
-      loadingStore.setLoading(true)
-      const corpsData = await corpsService.getOneCorps({ name })
-      setCorps(corpsData)
-      loadingStore.setLoading(false)
-    }
+    setLoading(true)
+    fetchCorps().finally(() => setLoading(false))
+  }, [fetchCorps])
 
-    fetchData()
-  }, [])
-
-  if (!loadingStore.getLoading() && (corps === null || corps === undefined)) {
-    return <Error404Page />
-  }
-
-  if (loadingStore.getLoading()) {
+  // Render
+  if (loading) {
     return (
       <SpinnerWrapper>
         <Spinner />
       </SpinnerWrapper>
     )
+  }
+
+  if (corps === null || corps === undefined) {
+    return <Error404Page />
   }
 
   const corpsFormStore = new CorpsFormStore(corps ?? undefined)

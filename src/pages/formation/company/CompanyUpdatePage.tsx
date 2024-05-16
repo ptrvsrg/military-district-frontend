@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Spinner } from '../../../components/spinner/Spinner.tsx'
@@ -21,29 +21,29 @@ export function CompanyUpdatePage() {
 
   // Fetch data
   const [company, setCompany] = useState<Company | null | undefined>()
+  const [loading, setLoading] = useState(false)
   const { companyService } = useServices()
 
+  const fetchCompany = useCallback(async () => {
+    const companyData = await companyService.getCompany({ name })
+    setCompany(companyData)
+  }, [name])
   useEffect(() => {
-    const fetchData = async () => {
-      loadingStore.setLoading(true)
-      const companyData = await companyService.getCompany({ name })
-      setCompany(companyData)
-      loadingStore.setLoading(false)
-    }
+    setLoading(true)
+    fetchCompany().finally(() => setLoading(false))
+  }, [fetchCompany])
 
-    fetchData()
-  }, [])
-
-  if (!loadingStore.getLoading() && (company === null || company === undefined)) {
-    return <Error404Page />
-  }
-
-  if (loadingStore.getLoading()) {
+  // Render
+  if (loading) {
     return (
       <SpinnerWrapper>
         <Spinner />
       </SpinnerWrapper>
     )
+  }
+
+  if (company === null || company === undefined) {
+    return <Error404Page />
   }
 
   const companyFormStore = new CompanyFormStore(company ?? undefined)

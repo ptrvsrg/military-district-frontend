@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Spinner } from '../../components/spinner/Spinner.tsx'
@@ -21,29 +21,29 @@ export function MilitaryUpdatePage() {
 
   // Fetch data
   const [military, setMilitary] = useState<Military | null | undefined>()
+  const [loading, setLoading] = useState(false)
   const { militaryService } = useServices()
 
+  const fetchMilitary = useCallback(async () => {
+    const militaryData = await militaryService.getMilitary({ mbn })
+    setMilitary(militaryData)
+  }, [mbn])
   useEffect(() => {
-    const fetchData = async () => {
-      loadingStore.setLoading(true)
-      const militaryData = await militaryService.getMilitary({ mbn })
-      setMilitary(militaryData)
-      loadingStore.setLoading(false)
-    }
+    setLoading(true)
+    fetchMilitary().finally(() => setLoading(false))
+  }, [fetchMilitary])
 
-    fetchData()
-  }, [])
-
-  if (!loadingStore.getLoading() && (military === null || military === undefined)) {
-    return <Error404Page />
-  }
-
-  if (loadingStore.getLoading()) {
+  // Render
+  if (loading) {
     return (
       <SpinnerWrapper>
         <Spinner />
       </SpinnerWrapper>
     )
+  }
+
+  if (military === null || military === undefined) {
+    return <Error404Page />
   }
 
   const militaryFormStore = new MilitaryFormStore(military ?? undefined)

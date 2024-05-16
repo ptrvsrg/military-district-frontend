@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Spinner } from '../../../components/spinner/Spinner.tsx'
@@ -21,29 +21,29 @@ export function DivisionUpdatePage() {
 
   // Fetch data
   const [division, setDivision] = useState<Division | null | undefined>()
+  const [loading, setLoading] = useState(false)
   const { divisionService } = useServices()
 
+  const fetchDivision = useCallback(async () => {
+    const divisionData = await divisionService.getDivision({ name })
+    setDivision(divisionData)
+  }, [name])
   useEffect(() => {
-    const fetchData = async () => {
-      loadingStore.setLoading(true)
-      const divisionData = await divisionService.getDivision({ name })
-      setDivision(divisionData)
-      loadingStore.setLoading(false)
-    }
+    setLoading(true)
+    fetchDivision().finally(() => setLoading(false))
+  }, [fetchDivision])
 
-    fetchData()
-  }, [])
-
-  if (!loadingStore.getLoading() && (division === null || division === undefined)) {
-    return <Error404Page />
-  }
-
-  if (loadingStore.getLoading()) {
+  // Render
+  if (loading) {
     return (
       <SpinnerWrapper>
         <Spinner />
       </SpinnerWrapper>
     )
+  }
+
+  if (division === null || division === undefined) {
+    return <Error404Page />
   }
 
   const divisionFormStore = new DivisionFormStore(division ?? undefined)

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Spinner } from '../../components/spinner/Spinner.tsx'
@@ -22,29 +22,29 @@ export function BuildingUpdatePage() {
 
   // Fetch data
   const [building, setBuilding] = useState<Building | null | undefined>()
+  const [loading, setLoading] = useState(false)
   const { buildingService } = useServices()
 
+  const fetchBuilding = useCallback(async () => {
+    const buildingData = await buildingService.getBuilding({ name, unit })
+    setBuilding(buildingData)
+  }, [name, unit])
   useEffect(() => {
-    const fetchData = async () => {
-      loadingStore.setLoading(true)
-      const buildingData = await buildingService.getBuilding({ name, unit })
-      setBuilding(buildingData)
-      loadingStore.setLoading(false)
-    }
+    setLoading(true)
+    fetchBuilding().finally(() => setLoading(false))
+  }, [fetchBuilding])
 
-    fetchData()
-  }, [])
-
-  if (!loadingStore.getLoading() && (building === null || building === undefined)) {
-    return <Error404Page />
-  }
-
-  if (loadingStore.getLoading()) {
+  // Render
+  if (loading) {
     return (
       <SpinnerWrapper>
         <Spinner />
       </SpinnerWrapper>
     )
+  }
+
+  if (building === null || building === undefined) {
+    return <Error404Page />
   }
 
   const buildingFormStore = new BuildingFormStore(building ?? undefined)

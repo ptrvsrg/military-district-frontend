@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { Spinner } from '../../../components/spinner/Spinner.tsx'
@@ -22,29 +22,29 @@ export function CombatEquipmentTypeUpdatePage() {
 
   // Fetch data
   const [combatEquipmentType, setCombatEquipmentType] = useState<CombatEquipmentType | null | undefined>()
+  const [loading, setLoading] = useState(false)
   const { combatEquipmentTypeService } = useServices()
 
+  const fetchCombatEquipmentType = useCallback(async () => {
+    const combatEquipmentTypeData = await combatEquipmentTypeService.getCombatEquipmentType({ category, name })
+    setCombatEquipmentType(combatEquipmentTypeData)
+  }, [category, name])
   useEffect(() => {
-    const fetchData = async () => {
-      loadingStore.setLoading(true)
-      const combatEquipmentTypeData = await combatEquipmentTypeService.getCombatEquipmentType({ category, name })
-      setCombatEquipmentType(combatEquipmentTypeData)
-      loadingStore.setLoading(false)
-    }
+    setLoading(true)
+    fetchCombatEquipmentType().finally(() => setLoading(false))
+  }, [fetchCombatEquipmentType])
 
-    fetchData()
-  }, [])
-
-  if (!loadingStore.getLoading() && (combatEquipmentType === null || combatEquipmentType === undefined)) {
-    return <Error404Page />
-  }
-
-  if (loadingStore.getLoading()) {
+  // Render
+  if (loading) {
     return (
       <SpinnerWrapper>
         <Spinner />
       </SpinnerWrapper>
     )
+  }
+
+  if (combatEquipmentType === null || combatEquipmentType === undefined) {
+    return <Error404Page />
   }
 
   const combatEquipmentTypeFormStore = new CombatEquipmentTypeFormStore(combatEquipmentType ?? undefined)
