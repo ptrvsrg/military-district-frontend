@@ -98,11 +98,11 @@ export function Header() {
   const languages = ['ru', 'en']
 
   return (
-    <Box ref={ref}>
+    <Box ref={ref} sx={{ borderBottom: '1px solid #CCC' }}>
       <AppBar color={'transparent'} position="sticky" sx={{ boxShadow: 'none' }}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <IconButton onClick={goToMain} sx={{ display: 'flex', gap: 5 }}>
-            <Box alt={''} component={'img'} src={logo} sx={{ height: '35px', width: 'auto' }} />
+            <Box alt={''} component={'img'} src={logo} sx={{ height: '30px', width: 'auto' }} />
           </IconButton>
 
           {width > maxWidth && (
