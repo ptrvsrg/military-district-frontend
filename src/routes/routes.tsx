@@ -15,6 +15,7 @@ import { ArmyUpdatePage } from '../pages/formation/army/ArmyUpdatePage.tsx'
 import { BrigadeCreatePage } from '../pages/formation/brigade/BrigadeCreatePage.tsx'
 import { BrigadeUpdatePage } from '../pages/formation/brigade/BrigadeUpdatePage.tsx'
 import { CompanyCreatePage } from '../pages/formation/company/CompanyCreatePage.tsx'
+import { CompanyUpdatePage } from '../pages/formation/company/CompanyUpdatePage.tsx'
 import { CorpsCreatePage } from '../pages/formation/corps/CorpsCreatePage.tsx'
 import { CorpsUpdatePage } from '../pages/formation/corps/CorpsUpdatePage.tsx'
 import { DivisionCreatePage } from '../pages/formation/division/DivisionCreatePage.tsx'
@@ -134,7 +135,7 @@ export function usePrivateRoutes(t: TFunction): PrivateRouteProps[] {
       title: t('companyCreate'),
     },
     {
-      page: <CompanyCreatePage />,
+      page: <CompanyUpdatePage />,
       path: '/formations/companies/update',
       privileges: ['READ_FORMATIONS', 'WRITE_FORMATIONS'],
       title: t('companyUpdate'),
