@@ -16,6 +16,3 @@ export class ReportDataStore {
     this.reportData = value
   }
 }
-
-const reportDataStore = new ReportDataStore()
-export default reportDataStore

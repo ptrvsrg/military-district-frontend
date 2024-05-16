@@ -18,6 +18,3 @@ export class ReportParametersStore {
     console.log(this.parameters)
   }
 }
-
-const reportParametersStore = new ReportParametersStore()
-export default reportParametersStore
