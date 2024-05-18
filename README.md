@@ -1,26 +1,12 @@
+
 # Military District (Frontend)
 
-<p align="center">
-   <a href="https://github.com/ptrvsrg/military-district-frontend/graphs/contributors">
-        <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/ptrvsrg/military-district-frontend?style=flat&label=Contributors&labelColor=222222&color=77D4FC"/>
-   </a>
-   <a href="https://github.com/ptrvsrg/military-district-frontend/forks">
-        <img alt="GitHub forks" src="https://img.shields.io/github/forks/ptrvsrg/military-district-frontend?style=flat&label=Forks&labelColor=222222&color=77D4FC"/>
-   </a>
-   <a href="https://github.com/ptrvsrg/military-district-frontend/stargazers">
-        <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/ptrvsrg/military-district-frontend?style=flat&label=Stars&labelColor=222222&color=77D4FC"/>
-   </a>
-   <a href="https://github.com/ptrvsrg/military-district-frontend/issues">
-        <img alt="GitHub issues" src="https://img.shields.io/github/issues/ptrvsrg/military-district-frontend?style=flat&label=Issues&labelColor=222222&color=77D4FC"/>
-   </a>
-   <a href="https://github.com/ptrvsrg/military-district-frontend/pulls">
-        <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/ptrvsrg/military-district-frontend?style=flat&label=Pull%20Requests&labelColor=222222&color=77D4FC"/>
-   </a>
-</p>
+![GitHub contributors](https://img.shields.io/github/contributors/ptrvsrg/military-district-frontend?style=flat&label=Contributors&labelColor=222222&color=77D4FC) ![GitHub forks](https://img.shields.io/github/forks/ptrvsrg/military-district-frontend?style=flat&label=Forks&labelColor=222222&color=77D4FC) ![GitHub Repo stars](https://img.shields.io/github/stars/ptrvsrg/military-district-frontend?style=flat&label=Stars&labelColor=222222&color=77D4FC) ![GitHub issues](https://img.shields.io/github/issues/ptrvsrg/military-district-frontend?style=flat&label=Issues&labelColor=222222&color=77D4FC) ![GitHub pull requests](https://img.shields.io/github/issues-pr/ptrvsrg/military-district-frontend?style=flat&label=Pull%20Requests&labelColor=222222&color=77D4FC)
 
 Military District - информационная система военного округа. Данная система содержит данные о 
 дислокации военных частей, воинской и офицерской структуре, воинских формированиях, военной технике 
 и оружии.
+
 
 ## Технологии
 
@@ -37,41 +23,61 @@ Military District - информационная система военного
 - ESLint 8.57.0
 - Prettier 3.2.5
 
-## Доступные скрипты
 
-Используется NodeJS версии v21.2.0
+## Установка
 
-```shell
-make help                                       # Показать справку
-make clean                                      # Очистить сгенерированные файлы
-make lint                                       # Автоматически исправить проблемы в коде
-make env                                        # Создайте файл .env из sample.env
-make dev                                        # Запустите локальный сервер для разработки
-make build-image IMAGE_NAME=<название образа>   # Создайте Docker образ
-make build                                      # Создание статических файлов для развертывания
-make deploy PORT=<номер порта>                  # Развертывание в контейнере Docker
+Клонируйте репозиторий:
+
+```bash
+  git clone https://github.com/ptrvsrg/military-district-frontend
 ```
 
-## Руководство по запуску
+Установите зависимости:
 
-1. Запустите скрипт для создания файла с переменными среды:
+```bash
+  npm install
+```
+    
+## Запуск локально
 
-    ```shell
-    make env
-    ```
+Создайте файл с переменными среды `.env` и инициализируйте переменные среды:
 
-2. Инициализируйте каждую переменную среды в созданном файле `.env`
-3. Запустите сборку Docker образа:
+```bash
+  make env
+```
 
-    ```shell
-    make build-image IMAGE_NAME=<название образа>
-    ```
+Запустите сервер разработки:
 
-4. Запустите Docker контейнер с приложением:
+```bash
+  make dev
+```
 
-    ```shell
-    make deploy
-    ```
+
+## Развертывание
+
+Создайте файл с переменными среды `.env` и инициализируйте переменные среды:
+
+```bash
+  make env
+```
+
+Запустите сборку Docker образа:
+
+```bash
+  make build-image IMAGE_NAME=<название образа>
+```
+
+Запустите Docker контейнер с приложением:
+
+```bash
+  make deploy
+```
+
+
+## Демо
+
+<img src="assets/demo.gif" width="640" height="360" />
+
 
 ## Вклад в проект
 
