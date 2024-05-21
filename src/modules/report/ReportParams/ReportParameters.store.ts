@@ -9,12 +9,10 @@ export class ReportParametersStore {
   }
 
   public getParameter(parameter: string): null | string {
-    console.log(this.parameters[parameter])
     return this.parameters[parameter]
   }
 
   public setParameter(parameter: string, value: null | string) {
     this.parameters[parameter] = value
-    console.log(this.parameters)
   }
 }
