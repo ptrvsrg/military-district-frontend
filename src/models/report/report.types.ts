@@ -18,11 +18,20 @@ export type GetReportsParameters = {
 }
 
 export type GetReportParameters = {
-  name: string
+  report: string
+}
+
+export type GetAllReportParameterValuesParameters = {
+  report: string
+}
+
+export type GetReportParameterValuesParameters = {
+  parameter: string
+  report: string
 }
 
 export type BuildReportParameters = {
-  name: string
+  report: string
 }
 
 export type ExportReportParameters = BuildReportParameters
