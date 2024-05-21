@@ -4,7 +4,7 @@ export class LoadingStore {
   private loading: boolean
 
   constructor() {
-    this.loading = true
+    this.loading = false
     makeAutoObservable(this)
   }
 
